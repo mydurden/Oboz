@@ -1,15 +1,12 @@
-using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Obozny;
 
 public partial class ProfileWindow : Window
 {
-    private string? _photo;
     private string _themeId;
     private bool? _menuDark;
 
@@ -19,26 +16,8 @@ public partial class ProfileWindow : Window
         var s = AppStore.Instance.Data.Settings;
         UnitBox.Text = s.UnitName;
         NameBox.Text = s.UserName;
-        _photo = s.ProfileImagePath;
         _themeId = ThemeService.Resolve(s.Theme).Id;
-        LoadPhoto();
         UpdateThemeCards();
-    }
-
-    private void LoadPhoto()
-    {
-        if (!string.IsNullOrWhiteSpace(_photo) && File.Exists(_photo))
-            Photo.Source = new BitmapImage(new Uri(_photo));
-    }
-
-    private void PickPhoto(object sender, RoutedEventArgs e)
-    {
-        var dlg = new OpenFileDialog { Filter = "Зображення|*.png;*.jpg;*.jpeg;*.bmp" };
-        if (dlg.ShowDialog() == true)
-        {
-            _photo = dlg.FileName;
-            LoadPhoto();
-        }
     }
 
     private void PickLight(object sender, MouseButtonEventArgs e)
@@ -132,7 +111,6 @@ public partial class ProfileWindow : Window
         var s = AppStore.Instance.Data.Settings;
         s.UnitName = UnitBox.Text.Trim();
         s.UserName = NameBox.Text.Trim();
-        s.ProfileImagePath = _photo;
         s.Theme = _themeId;
         ThemeService.Apply(s.Theme);
         AppStore.Instance.Save();
