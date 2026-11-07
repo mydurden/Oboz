@@ -18,10 +18,14 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*" MinWidth="160"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="TitleBlock" VerticalAlignment="Center" HorizontalAlignment="Left"
-                           Margin="0,0,8,0"
-                           Foreground="{DynamicResource HeaderFg}" FontSize="22" FontWeight="SemiBold"
-                           TextWrapping="Wrap"/>
+                <!-- Зліва лише підрозділ; по центру вертикалі відносно ряду кнопок 52px. -->
+                <Grid Grid.Column="0" MinHeight="52" VerticalAlignment="Stretch" Margin="0,0,8,0">
+                    <TextBlock x:Name="TitleBlock"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Foreground="{DynamicResource HeaderFg}"
+                               FontSize="22" FontWeight="SemiBold"
+                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                </Grid>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="8,0" MaxWidth="680">
                     <TextBlock x:Name="TableTitleBlock" Foreground="{DynamicResource HeaderFg}" FontSize="15"
                                FontWeight="SemiBold" TextAlignment="Center"
@@ -31,7 +35,7 @@
                                Visibility="Collapsed"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center" MinHeight="52">
                     <Button x:Name="AddStickerBtn" Style="{StaticResource IconButton}"
                             Width="52" Height="52" Margin="0,0,8,0" Visibility="Collapsed"
                             Click="AddSticker" ToolTip="Додати стікер">
@@ -46,10 +50,13 @@
                             <Border Background="#F0E6A0" CornerRadius="3" Margin="0,6,4,0" BorderBrush="#C4A000" BorderThickness="1"/>
                         </Grid>
                     </Button>
+                    <!-- Візок = лого Обозного замість смайлика профілю; без рамки/фону. -->
                     <Button x:Name="ProfileBtn" Style="{StaticResource HeaderProfileButton}"
-                            Width="52" Height="52" Click="OpenProfile" ToolTip="Особисті налаштування">
+                            Width="52" Height="52" VerticalAlignment="Center"
+                            Click="OpenProfile" ToolTip="Особисті налаштування">
                         <Image x:Name="HeaderLogo" Width="48" Height="48"
-                               Stretch="Uniform" SnapsToDevicePixels="True"/>
+                               Stretch="Uniform" SnapsToDevicePixels="True"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Grid>

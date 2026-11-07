@@ -210,6 +210,8 @@
             <Setter Property="MinWidth" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="CompactIconButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
