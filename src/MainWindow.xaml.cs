@@ -498,21 +498,8 @@ public partial class MainWindow : Window
     private void PrepareWarehouseMove(object sender, RoutedEventArgs e)
     {
         CollapseOpsMenu();
-        var choices = new[]
-        {
-            new WriteOffChoice("Повернення — на склад служби", DocType.Return),
-            new WriteOffChoice("Переміщення — на інший підрозділ", DocType.Transfer)
-        };
-        var pick = new TypePickWindow(
-            "Виконати переміщення майна на інший склад",
-            "Оберіть рух майна",
-            choices)
-        { Owner = this };
-        if (pick.ShowDialog() != true || pick.Selected == null) return;
-        var where = pick.Selected.DocType == DocType.Return
-            ? "На склад служби"
-            : "На інший підрозділ";
-        StartDraft(pick.Selected.DocType, where);
+        // Одразу повернення на склад служби — без вибору видів переміщення.
+        StartDraft(DocType.Return, "На склад служби");
     }
 
     private void StartDraft(DocType type, string? workTypeName = null)

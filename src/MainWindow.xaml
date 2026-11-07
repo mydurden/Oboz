@@ -78,7 +78,7 @@
                 </Grid.RowDefinitions>
                 <Button Grid.Column="0" Grid.Row="0" Content="Додати майно на склад" Margin="6" Click="AddProperty"/>
                 <Button Grid.Column="0" Grid.Row="1" Content="Підготувати документи на списання майна" Margin="6" Click="PrepareWriteOff"/>
-                <Button Grid.Column="0" Grid.Row="2" Content="Виконати переміщення майна на інший склад" Margin="6" Click="PrepareWarehouseMove"/>
+                <Button Grid.Column="0" Grid.Row="2" Content="Переміщення (повернення на склад служби)" Margin="6" Click="PrepareWarehouseMove"/>
                 <Button Grid.Column="0" Grid.Row="3" Content="Номенклатура" Margin="6" Click="OpenNomenclature"
                         ToolTip="Довідник: назва, одиниця, тип майна (запаси / основні засоби)"/>
                 <Button Grid.Column="1" Grid.Row="0" x:Name="ReservedBtn" Content="Відобразити зарезервоване майно" Margin="6" Click="ToggleReserved"/>
