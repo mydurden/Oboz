@@ -1,0 +1,46 @@
+<Window x:Class="Obozny.BetaTermsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Умови використання бета-версії Обозний"
+        Width="760" Height="560"
+        MinWidth="560" MinHeight="440"
+        MaxHeight="720"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        Background="{DynamicResource PageBg}"
+        Foreground="{DynamicResource TextPrimary}"
+        FontFamily="{DynamicResource AppFont}">
+    <DockPanel Margin="20">
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,16,0,0" LastChildFill="False">
+            <Button x:Name="ExitBtn" DockPanel.Dock="Left"
+                    Content="Вийти" Style="{StaticResource GhostButton}"
+                    MinWidth="120" Click="ExitClick"/>
+            <Button x:Name="AgreeBtn" DockPanel.Dock="Right"
+                    Content="Погоджуюсь" MinWidth="160"
+                    Visibility="Collapsed" IsEnabled="False" Click="AgreeClick"/>
+            <TextBlock x:Name="ScrollHint" DockPanel.Dock="Right"
+                       Text="Прокрутіть текст до самого кінця"
+                       VerticalAlignment="Center" Margin="0,0,16,0"
+                       Foreground="{DynamicResource Muted}" FontSize="13"/>
+        </DockPanel>
+
+        <TextBlock DockPanel.Dock="Top"
+                   Text="Умови використання бета-версії Обозний"
+                   FontSize="22" FontWeight="SemiBold"
+                   TextWrapping="Wrap" Margin="0,0,0,14"
+                   Foreground="{DynamicResource TextPrimary}"/>
+
+        <Border Background="{DynamicResource CardBg}"
+                BorderBrush="{DynamicResource InputBorder}"
+                BorderThickness="1" CornerRadius="10"
+                Padding="4">
+            <ScrollViewer x:Name="TermsScroll"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Padding="14,12"
+                          ScrollChanged="TermsScrollChanged">
+                <StackPanel x:Name="TermsBody"/>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</Window>

@@ -1,0 +1,32 @@
+<Window x:Class="Obozny.CalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Кількість" Height="480" Width="360"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#E8EEE8">
+    <DockPanel Margin="12">
+        <TextBox x:Name="Display" DockPanel.Dock="Top" FontSize="28" MinHeight="56"
+                 IsReadOnly="True" Text="0" Margin="0,0,0,12"/>
+        <UniformGrid Rows="5" Columns="4">
+            <Button Content="C" Click="Key" Tag="C" Style="{StaticResource GhostButton}"/>
+            <Button Content="←" Click="Key" Tag="B" Style="{StaticResource GhostButton}"/>
+            <Button Content="÷" Click="Key" Tag="/" Style="{StaticResource GhostButton}"/>
+            <Button Content="×" Click="Key" Tag="*" Style="{StaticResource GhostButton}"/>
+            <Button Content="7" Click="Key" Tag="7"/>
+            <Button Content="8" Click="Key" Tag="8"/>
+            <Button Content="9" Click="Key" Tag="9"/>
+            <Button Content="−" Click="Key" Tag="-" Style="{StaticResource GhostButton}"/>
+            <Button Content="4" Click="Key" Tag="4"/>
+            <Button Content="5" Click="Key" Tag="5"/>
+            <Button Content="6" Click="Key" Tag="6"/>
+            <Button Content="+" Click="Key" Tag="+" Style="{StaticResource GhostButton}"/>
+            <Button Content="1" Click="Key" Tag="1"/>
+            <Button Content="2" Click="Key" Tag="2"/>
+            <Button Content="3" Click="Key" Tag="3"/>
+            <Button Content="=" Click="Key" Tag="=" Background="#1565C0"/>
+            <Button Content="0" Click="Key" Tag="0"/>
+            <Button Content="," Click="Key" Tag=","/>
+            <Button Content="Ок" Click="Ok" Grid.ColumnSpan="2"/>
+        </UniformGrid>
+    </DockPanel>
+</Window>

@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
+    <AssemblyName>Обозний</AssemblyName>
+    <RootNamespace>Obozny</RootNamespace>
+    <Product>Обозний</Product>
+    <Version>0.1.1</Version>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <!-- Publish: single-file зі стисненням у корінь проєкту (не _publish). -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishDir>$(MSBuildProjectDirectory)\..\</PublishDir>
+    <PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+  <!-- Антивірус: не лишати sidecar managed dll продукту в корені роздачі. -->
+  <Target Name="RemoveSidecarProductDlls" AfterTargets="Publish">
+    <ItemGroup>
+      <_SidecarProduct Include="$(PublishDir)$(AssemblyName).dll" />
+      <_SidecarProduct Include="$(PublishDir)$(AssemblyName).deps.json" />
+      <_SidecarProduct Include="$(PublishDir)$(AssemblyName).runtimeconfig.json" />
+      <_SidecarProduct Include="$(PublishDir)$(AssemblyName).pdb" />
+    </ItemGroup>
+    <Delete Files="@(_SidecarProduct)" TreatErrorsAsWarnings="true" />
+  </Target>
+  <!-- OneDrive conflict copies (*-WhiteWater) — не компілювати. -->
+  <ItemGroup>
+    <Compile Remove="**/*-WhiteWater.cs" />
+    <None Include="**/*-WhiteWater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Obozny.Tests" />
+    <InternalsVisibleTo Include="VydRepro" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <!-- Явно: offline stub ClosedXML раніше губив транзитиви в single-file (немає DocumentFormat.OpenXml). -->
+    <PackageReference Include="ClosedXML.Parser" Version="2.0.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" />
+    <PackageReference Include="DocumentFormat.OpenXml.Framework" Version="3.1.1" />
+    <PackageReference Include="ExcelNumberFormat" Version="1.1.0" />
+    <PackageReference Include="RBush.Signed" Version="4.0.0" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.1" />
+    <PackageReference Include="NPOI" Version="2.7.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\logo_dark.png" />
+    <Resource Include="Assets\logo.ico" />
+  </ItemGroup>
+</Project>
