@@ -370,6 +370,7 @@ internal sealed class AppStore
         Data.CustomVyds ??= new List<string>();
         Data.VydKeywords ??= new List<VydKeywordEntry>();
         Data.VydDisplayUnits ??= new List<VydDisplayUnitEntry>();
+        Data.VydSupplyServices ??= new List<VydSupplyServiceEntry>();
         Data.Stickers ??= new List<StickerNote>();
         Data.StockSummarySticker ??= new StockSummaryStickerState();
         Data.Nomenclatures ??= new List<NomenclatureItem>();
@@ -382,6 +383,7 @@ internal sealed class AppStore
             || Data.CustomVyds.Count > 0
             || Data.VydKeywords.Count > 0
             || Data.VydDisplayUnits.Count > 0
+            || Data.VydSupplyServices.Count > 0
             || Data.Stickers.Count > 0;
 
         if (hasAnything)
@@ -394,10 +396,11 @@ internal sealed class AppStore
         Data.CustomVyds.Clear();
         Data.VydKeywords.Clear();
         Data.VydDisplayUnits.Clear();
+        Data.VydSupplyServices.Clear();
         Data.Stickers.Clear();
         Data.StockSummarySticker = new StockSummaryStickerState();
         Data.HadFirstStockBackup = false;
-        // Settings / WorkDays / LastActiveDate / VydSupplyServices — лишаємо.
+        // Settings / WorkDays / LastActiveDate — лишаємо.
         Save();
     }
 
