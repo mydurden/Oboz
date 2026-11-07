@@ -19,16 +19,7 @@
             <TextBlock Text="Підрозділ" FontSize="13" Margin="0,0,0,3" Foreground="{DynamicResource Muted}"/>
             <TextBox x:Name="UnitBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,10"/>
             <TextBlock Text="Ім'я / посада" FontSize="13" Margin="0,0,0,3" Foreground="{DynamicResource Muted}"/>
-            <TextBox x:Name="NameBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,10"/>
-            <TextBlock Text="Зображення профілю" FontSize="13" Margin="0,0,0,6" Foreground="{DynamicResource Muted}"/>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
-                <Border Width="64" Height="64" CornerRadius="32" Background="{DynamicResource HeaderBg}" ClipToBounds="True">
-                    <Image x:Name="Photo" Stretch="UniformToFill"/>
-                </Border>
-                <Button Content="Обрати фото" Style="{StaticResource GhostButton}" Margin="10,0,0,0"
-                        MinHeight="32" Height="32" FontSize="13" Padding="12,4"
-                        VerticalAlignment="Center" Click="PickPhoto"/>
-            </StackPanel>
+            <TextBox x:Name="NameBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,14"/>
 
             <TextBlock Text="Тема оформлення" FontSize="13" Margin="0,0,0,6" Foreground="{DynamicResource Muted}"/>
             <UniformGrid Columns="2" Margin="0,0,0,0">
