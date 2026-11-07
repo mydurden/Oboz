@@ -120,10 +120,13 @@ public partial class ProfileWindow : Window
     private void ClearStock(object sender, RoutedEventArgs e)
     {
         var ans = MessageBox.Show(
-            "УВАГА!\n\nБуде видалено все майно зі складу, усі документи і всі рухи.\n" +
-            "Налаштування профілю залишаться.\n" +
-            "Перед очищенням програма зробить бекап залишку.\n\n" +
-            "Точно очистити склад?",
+            "УВАГА!\n\nПовний скид складу й довідників для наступника:\n" +
+            "• майно, номенклатура, документи, рухи;\n" +
+            "• користувацькі види, навчені ключі Виду, О.В. відображення;\n" +
+            "• стікери та зведені залишки.\n\n" +
+            "Налаштування профілю (підрозділ, ім'я, тема) залишаться.\n" +
+            "Перед очищенням програма зробить повний бекап даних.\n\n" +
+            "Точно виконати повне очищення?",
             "Обозний — очистити склад",
             MessageBoxButton.YesNo,
             MessageBoxImage.Warning,
@@ -131,7 +134,11 @@ public partial class ProfileWindow : Window
         if (ans != MessageBoxResult.Yes) return;
 
         AppStore.Instance.ClearWarehouse();
-        MessageBox.Show("Склад очищено. Можна завантажувати майно заново.", "Обозний");
+        if (Owner is MainWindow main)
+            main.RelayoutStickersAfterClear();
+        MessageBox.Show(
+            "Склад і довідники очищено. Можна завантажувати майно заново.",
+            "Обозний");
         DialogResult = true;
     }
 

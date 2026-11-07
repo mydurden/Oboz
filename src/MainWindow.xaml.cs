@@ -353,6 +353,15 @@ public partial class MainWindow : Window
         StickersBtn.Opacity = on ? 1.0 : 0.55;
     }
 
+    /// <summary>Після ClearWarehouse: закрити старі вікна стікерів і знову показати (напр. керівні).</summary>
+    internal void RelayoutStickersAfterClear()
+    {
+        _stickers?.CloseAll();
+        _stickers?.Start();
+        SyncStickerButtons();
+        RefreshAll();
+    }
+
     private static bool IsInside(DependencyObject? src, DependencyObject target)
     {
         while (src != null)

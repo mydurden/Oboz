@@ -367,13 +367,37 @@ internal sealed class AppStore
 
     public void ClearWarehouse()
     {
-        if (Data.Properties.Count > 0 || Data.Documents.Count > 0)
-            BackupService.Stock(Data, "перед_очищенням");
+        Data.CustomVyds ??= new List<string>();
+        Data.VydKeywords ??= new List<VydKeywordEntry>();
+        Data.VydDisplayUnits ??= new List<VydDisplayUnitEntry>();
+        Data.Stickers ??= new List<StickerNote>();
+        Data.StockSummarySticker ??= new StockSummaryStickerState();
+        Data.Nomenclatures ??= new List<NomenclatureItem>();
+
+        var hasAnything =
+            Data.Properties.Count > 0
+            || Data.Nomenclatures.Count > 0
+            || Data.Documents.Count > 0
+            || Data.Movements.Count > 0
+            || Data.CustomVyds.Count > 0
+            || Data.VydKeywords.Count > 0
+            || Data.VydDisplayUnits.Count > 0
+            || Data.Stickers.Count > 0;
+
+        if (hasAnything)
+            BackupService.BeforeWarehouseClear(Data);
+
         Data.Properties.Clear();
         Data.Nomenclatures.Clear();
         Data.Documents.Clear();
         Data.Movements.Clear();
+        Data.CustomVyds.Clear();
+        Data.VydKeywords.Clear();
+        Data.VydDisplayUnits.Clear();
+        Data.Stickers.Clear();
+        Data.StockSummarySticker = new StockSummaryStickerState();
         Data.HadFirstStockBackup = false;
+        // Settings / WorkDays / LastActiveDate / VydSupplyServices — лишаємо.
         Save();
     }
 
