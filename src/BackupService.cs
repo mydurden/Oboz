@@ -64,6 +64,29 @@ internal static class BackupService
         Prune(data);
     }
 
+    /// <summary>
+    /// Повний знімок AppData перед «Очистити склад» (не лише properties).
+    /// </summary>
+    public static void BeforeWarehouseClear(AppData data)
+    {
+        EnsureLayout();
+        RememberWorkDay(data);
+        var day = DateTime.Today.ToString("yyyy-MM-dd");
+        var folder = Path.Combine(Paths.BackupDir, day);
+        Directory.CreateDirectory(folder);
+        var payload = new
+        {
+            kind = "перед_очищенням",
+            reason = "перед_очищенням",
+            at = DateTime.Now,
+            data
+        };
+        var name = $"перед_очищенням_{DateTime.Now:HHmmss}.json";
+        File.WriteAllText(Path.Combine(folder, name), JsonSerializer.Serialize(payload, JsonOpt));
+        data.HadFirstStockBackup = true;
+        Prune(data);
+    }
+
     public static bool NeedsEndOfDayStock(AppData data)
     {
         var today = DateTime.Today.ToString("yyyy-MM-dd");
