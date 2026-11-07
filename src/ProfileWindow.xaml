@@ -1,0 +1,63 @@
+<Window x:Class="Obozny.ProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Особисті налаштування" Width="460"
+        SizeToContent="WidthAndHeight"
+        MinWidth="420"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource PageBg}"
+        ResizeMode="NoResize">
+    <DockPanel Margin="16">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button Content="Скасувати" Style="{StaticResource GhostButton}"
+                    MinHeight="32" Height="32" MinWidth="100" FontSize="13" Padding="12,4"
+                    Click="Cancel" Margin="0,0,8,0"/>
+            <Button Content="Зберегти" MinHeight="32" Height="32" MinWidth="100"
+                    FontSize="13" Padding="12,4" Click="Save"/>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Text="Підрозділ" FontSize="13" Margin="0,0,0,3" Foreground="{DynamicResource Muted}"/>
+            <TextBox x:Name="UnitBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,10"/>
+            <TextBlock Text="Ім'я / посада" FontSize="13" Margin="0,0,0,3" Foreground="{DynamicResource Muted}"/>
+            <TextBox x:Name="NameBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,10"/>
+            <TextBlock Text="Зображення профілю" FontSize="13" Margin="0,0,0,6" Foreground="{DynamicResource Muted}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                <Border Width="64" Height="64" CornerRadius="32" Background="{DynamicResource HeaderBg}" ClipToBounds="True">
+                    <Image x:Name="Photo" Stretch="UniformToFill"/>
+                </Border>
+                <Button Content="Обрати фото" Style="{StaticResource GhostButton}" Margin="10,0,0,0"
+                        MinHeight="32" Height="32" FontSize="13" Padding="12,4"
+                        VerticalAlignment="Center" Click="PickPhoto"/>
+            </StackPanel>
+
+            <TextBlock Text="Тема оформлення" FontSize="13" Margin="0,0,0,6" Foreground="{DynamicResource Muted}"/>
+            <UniformGrid Columns="2" Margin="0,0,0,0">
+                <Border x:Name="LightCard" Margin="0,0,6,0" CornerRadius="12" Cursor="Hand"
+                        BorderThickness="3" Background="#E8EEE8"
+                        MouseLeftButtonUp="PickLight">
+                    <StackPanel VerticalAlignment="Center" Margin="8">
+                        <Image Source="pack://application:,,,/Assets/logo.png" Width="52" Height="52"
+                               Stretch="Uniform" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Світла" FontSize="12" FontWeight="Bold" Foreground="#5C6B63"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="DarkCard" Margin="6,0,0,0" CornerRadius="12" Cursor="Hand"
+                        BorderThickness="3" Background="#1A3A5C"
+                        MouseLeftButtonUp="PickDark">
+                    <StackPanel VerticalAlignment="Center" Margin="8">
+                        <Image Source="pack://application:,,,/Assets/logo_dark.png" Width="52" Height="52"
+                               Stretch="Uniform" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Темна" FontSize="12" FontWeight="Bold" Foreground="#A8C4D8"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+            <UniformGrid x:Name="ThemeGrid" Columns="3" Margin="0,8,0,0" Visibility="Collapsed"/>
+
+            <Button Content="Очистити склад" Style="{StaticResource DangerButton}"
+                    MinHeight="32" Height="32" FontSize="13" Padding="12,4" Margin="0,14,0,0"
+                    Click="ClearStock"/>
+        </StackPanel>
+    </DockPanel>
+</Window>
