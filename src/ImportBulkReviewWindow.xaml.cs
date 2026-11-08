@@ -69,7 +69,8 @@ public partial class ImportBulkReviewWindow : Window
         }
 
         LinesGrid.ItemsSource = _lines;
-        SummaryText.Text = $"Документів: {groups.Count}   ·   Рядків майна: {_lines.Count}";
+        SummaryText.Text = "";
+        SummaryText.Visibility = Visibility.Collapsed;
         FillIntent(ImportPosting.Guess(groups.SelectMany(g => g.Rows)));
         FillSupplyAll();
     }
@@ -190,7 +191,8 @@ public partial class ImportBulkReviewWindow : Window
     {
         if (LinesGrid.SelectedItem is not BulkLine line) return;
         _lines.Remove(line);
-        SummaryText.Text = $"Рядків майна: {_lines.Count}";
+        SummaryText.Text = "";
+        SummaryText.Visibility = Visibility.Collapsed;
     }
 
     private void FillIntent(string selected)
@@ -249,9 +251,7 @@ public partial class ImportBulkReviewWindow : Window
         if (unknown > 0)
         {
             MessageBox.Show(
-                $"Тип руху невизначений у {unknown} рядку(ах).\n\n" +
-                "Оберіть робочий тип у стовпці «Тип руху» (списання, отримання, переміщення, повернення) " +
-                "або змініть намір файлу. Не можна проводити навмання.",
+                $"Оберіть тип руху ({unknown}).",
                 "Обозний", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }

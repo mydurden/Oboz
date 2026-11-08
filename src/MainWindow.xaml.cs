@@ -199,9 +199,10 @@ public partial class MainWindow : Window
             };
             subtitle = _view switch
             {
-                ViewMode.Movements => "Списання, отримання, переміщення, повернення",
-                ViewMode.Strongpoints => "Що утримуються підрозділом",
-                ViewMode.FixedAssets => "Майно з типом номенклатури «Основні засоби»",
+                // Підзаголовок запасів — OBZ-83 (залишити). Інші види — техпідписи прибрано (OBZ-89).
+                ViewMode.Movements => "",
+                ViewMode.Strongpoints => "",
+                ViewMode.FixedAssets => "",
                 _ => "Запаси підрозділу (без основних засобів)"
             };
         }
@@ -676,8 +677,8 @@ public partial class MainWindow : Window
 
     private void UpdateDraftHint()
     {
-        DraftHint.Text =
-            "Можете додати майно подвійним натисканням або простим перетягуванням. Щоб прибрати — двічі натисніть рядок у документі або перетягніть назад у таблицю.";
+        DraftHint.Text = "";
+        DraftHint.Visibility = Visibility.Collapsed;
     }
 
     private void RefreshDraftLines()
@@ -1861,8 +1862,7 @@ public partial class MainWindow : Window
             if (unknown > 0)
             {
                 MessageBox.Show(
-                    $"У реєстрі є {unknown} рядків з невизначеним типом руху (жовта підсвітка).\n\n" +
-                    "Натисніть на рядок і оберіть робочий тип вручну.",
+                    $"У реєстрі є {unknown} рядків з невизначеним типом руху.",
                     "Обозний", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -3170,7 +3170,7 @@ public partial class MainWindow : Window
             .ToArray();
         var pick = new TypePickWindow(
             "Тип руху невизначений",
-            "Оберіть робочий тип руху для цього рядка (не назву документа).",
+            "",
             choices)
         { Owner = this };
         if (pick.ShowDialog() != true || pick.Selected == null) return false;

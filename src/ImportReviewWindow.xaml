@@ -15,12 +15,7 @@
 
         <StackPanel Margin="0,0,0,12">
             <TextBox x:Name="TitleText" Style="{StaticResource CopyText}" FontSize="22" FontWeight="SemiBold"/>
-            <TextBox Style="{StaticResource CopyText}" Margin="0,6,0,0"
-                     Foreground="{DynamicResource Muted}"
-                     Text="Перевірте дані перед збереженням. За потреби виправте найменування, одиницю чи кількість."/>
             <StackPanel x:Name="IntentPanel" Margin="0,12,0,0">
-                <TextBlock Text="Що ви проводите цим файлом?" Margin="0,0,0,4"
-                           Foreground="{DynamicResource TextPrimary}"/>
                 <ComboBox x:Name="IntentBox" MinHeight="40" FontSize="15"
                           SelectionChanged="IntentChanged"/>
             </StackPanel>

@@ -133,7 +133,8 @@ public partial class BulkDisplayUomWindow : Window
                 _visible.Add(row);
 
             RestoreSortDescriptions(sorts);
-            SummaryText.Text = $"Показано {_visible.Count} з {_all.Count}";
+            SummaryText.Text = "";
+            SummaryText.Visibility = Visibility.Collapsed;
             PaintFilterBoxes();
         }
         finally

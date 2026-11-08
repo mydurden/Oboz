@@ -174,8 +174,11 @@ public partial class StickerWindow : Window
         return string.IsNullOrEmpty(text);
     }
 
-    private void UpdatePlaceholder() =>
-        Placeholder.Visibility = IsEditorEmpty() ? Visibility.Visible : Visibility.Collapsed;
+    private void UpdatePlaceholder()
+    {
+        Placeholder.Text = "";
+        Placeholder.Visibility = Visibility.Collapsed;
+    }
 
     private void SetChrome(bool on)
     {

@@ -259,6 +259,12 @@ public partial class NomenclatureListWindow : Window
         if (dlg.ShowDialog() == true) Reload();
     }
 
+    private void BulkSupplyServiceClick(object sender, RoutedEventArgs e)
+    {
+        var dlg = new BulkSupplyServiceWindow { Owner = this };
+        if (dlg.ShowDialog() == true) Reload();
+    }
+
     private void OpenClick(object sender, RoutedEventArgs e) => OpenSelected();
 
     private void GridDoubleClick(object sender, MouseButtonEventArgs e) => OpenSelected();

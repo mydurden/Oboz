@@ -20,11 +20,6 @@
             <TextBox x:Name="TitleBlock" Style="{StaticResource CopyText}"
                      Text="Призначити Вид" FontSize="22" FontWeight="SemiBold"
                      Margin="0,0,0,8"/>
-            <TextBlock x:Name="SummaryText" FontSize="14" TextWrapping="Wrap"
-                       Foreground="{DynamicResource TextPrimary}" Margin="0,0,0,8"/>
-            <TextBlock FontSize="13" TextWrapping="Wrap"
-                       Foreground="{DynamicResource Muted}" Margin="0,0,0,10"
-                       Text="Достатньо натиснути рядок (або галочку), щоб обрати чи зняти. Один Вид зверху — для обраних. Без галочок «Зберегти» і «Скасувати» — без змін."/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <RadioButton x:Name="ModeByName"
@@ -58,11 +53,9 @@
                 </StackPanel>
             </DockPanel>
 
-            <TextBlock Text="Вид для обраних" FontSize="13"
-                       Foreground="{DynamicResource Muted}" Margin="0,0,0,4"/>
             <!-- Один ComboBox на вікно — не сотні в рядках (фікс #2). -->
             <ComboBox x:Name="VydForAllBox" MinHeight="44" FontSize="16"
-                      HorizontalAlignment="Stretch"/>
+                      HorizontalAlignment="Stretch" Margin="0,0,0,4"/>
         </StackPanel>
 
         <Border BorderBrush="{DynamicResource InputBorder}" BorderThickness="1"

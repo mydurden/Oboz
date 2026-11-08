@@ -294,6 +294,11 @@ public sealed class NomenclatureItem
     public decimal? DisplayFactor { get; set; }
     public NomenclatureKind Kind { get; set; } = NomenclatureKind.Stocks;
     public string Note { get; set; } = "";
+    /// <summary>
+    /// Служба забезпечення паспорта («ІС ССП» / «СЗУ» / «СОВТ та МСВ» або порожньо).
+    /// При збереженні з номенклатури синхронізується на пов’язані картки майна.
+    /// </summary>
+    public string SupplyService { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 }
 

@@ -27,7 +27,7 @@
                            Text="Зміст"/>
                 <TextBlock x:Name="SubtitleBlock" Margin="0,4,0,0" FontSize="13"
                            Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
-                           Text="Оберіть вид майна, щоб відкрити розділ книги. Лише перегляд."/>
+                           Visibility="Collapsed" Text=""/>
             </StackPanel>
         </DockPanel>
 
@@ -82,7 +82,7 @@
                 BorderThickness="1" CornerRadius="12" Padding="4">
             <Grid>
                 <TextBlock x:Name="EmptyHint" Visibility="Collapsed"
-                           Text="У цьому виді немає позицій і проведених рухів."
+                           Text=""
                            FontSize="15" Foreground="{DynamicResource Muted}"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            TextWrapping="Wrap" Margin="24"/>

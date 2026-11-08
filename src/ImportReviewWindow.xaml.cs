@@ -69,9 +69,7 @@ public partial class ImportReviewWindow : Window
         Loaded -= WarnUnknownKindOnce;
         MessageBox.Show(
             this,
-            "Тип руху для цього документа невизначений.\n\n" +
-            "Оберіть намір у списку нижче (отримання, повернення, переміщення, інвентаризація) — " +
-            "не залишайте невизначений тип.",
+            "Оберіть тип руху.",
             "Обозний", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
@@ -184,9 +182,7 @@ public partial class ImportReviewWindow : Window
         if (rows.Any(r => r.Kind == ImportMoveKind.Unknown))
         {
             MessageBox.Show(
-                "Тип руху невизначений.\n\n" +
-                "Оберіть намір файлу (отримання, повернення, переміщення або інвентаризація). " +
-                "Не можна проводити навмання.",
+                "Оберіть тип руху.",
                 "Обозний", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }

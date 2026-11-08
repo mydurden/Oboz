@@ -8,11 +8,6 @@ namespace Obozny;
 
 public partial class AccountingBookWindow : Window
 {
-    private const string EmptyFilterStockText =
-        "Відсутній залишок цього виду майна на складі. Вимкніть «Фільтр по наявності», щоб побачити всі зафіксовані операції по цьому виду майна.";
-    private const string EmptyKindText =
-        "У цьому виді немає позицій і проведених рухів.";
-
     private DateTime _periodFrom;
     private DateTime _periodTo;
     private string? _openVyd;
@@ -69,16 +64,8 @@ public partial class AccountingBookWindow : Window
             _periodFrom,
             _periodTo);
         TocList.ItemsSource = toc;
-        if (toc.Count == 0)
-        {
-            SubtitleBlock.Text =
-                "Немає видів із проведеними рухами за обраний період. Змініть Від/До або перевірте проведення документів.";
-        }
-        else
-        {
-            SubtitleBlock.Text =
-                "Оберіть вид майна, щоб відкрити розділ книги. Лише перегляд.";
-        }
+        SubtitleBlock.Text = "";
+        SubtitleBlock.Visibility = Visibility.Collapsed;
     }
 
     private void TocItemClick(object sender, RoutedEventArgs e)
@@ -156,7 +143,8 @@ public partial class AccountingBookWindow : Window
         SetPresenceFilterChecked(false);
         PresenceFilterBtn.Visibility = Visibility.Collapsed;
         TitleBlock.Text = "Зміст";
-        SubtitleBlock.Visibility = Visibility.Visible;
+        SubtitleBlock.Text = "";
+        SubtitleBlock.Visibility = Visibility.Collapsed;
         BackBtn.Visibility = Visibility.Collapsed;
         TocHost.Visibility = Visibility.Visible;
         SectionHost.Visibility = Visibility.Collapsed;
@@ -191,8 +179,8 @@ public partial class AccountingBookWindow : Window
             _periodTo);
 
         TitleBlock.Text = _fullSection.Vyd;
-        SubtitleBlock.Text = "(найменування військового майна — перегляд розділу книги)";
-        SubtitleBlock.Visibility = Visibility.Visible;
+        SubtitleBlock.Text = "";
+        SubtitleBlock.Visibility = Visibility.Collapsed;
         BackBtn.Visibility = Visibility.Visible;
         PresenceFilterBtn.Visibility = Visibility.Visible;
         TocHost.Visibility = Visibility.Collapsed;
@@ -242,8 +230,8 @@ public partial class AccountingBookWindow : Window
         // Порожній повний розділ або фільтр зрізав усі колонки з становить=0.
         if (section.IsEmpty || section.Columns.Count == 0)
         {
-            EmptyHint.Text = section.IsEmpty ? EmptyKindText : EmptyFilterStockText;
-            EmptyHint.Visibility = Visibility.Visible;
+            EmptyHint.Text = "";
+            EmptyHint.Visibility = Visibility.Collapsed;
             SectionTableHost.Visibility = Visibility.Collapsed;
             ClearSurfaces();
             return;

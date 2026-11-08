@@ -21,10 +21,7 @@
         <StackPanel>
             <TextBox Style="{StaticResource CopyText}"
                      Text="Новий вид майна" FontSize="22" FontWeight="SemiBold"
-                     Margin="0,0,0,8"/>
-            <TextBlock FontSize="13" TextWrapping="Wrap"
-                       Foreground="{DynamicResource Muted}" Margin="0,0,0,12"
-                       Text="Назва з’явиться в усіх списках видів (картка, масове призначення, фільтр нотатки, навчання ключів). Фіксований каталог не змінюється."/>
+                     Margin="0,0,0,12"/>
             <TextBlock Text="Назва виду" FontSize="13"
                        Foreground="{DynamicResource Muted}" Margin="0,0,0,4"/>
             <TextBox x:Name="NameBox" MinHeight="44" FontSize="16"/>

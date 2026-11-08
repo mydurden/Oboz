@@ -10,7 +10,7 @@ public partial class TypePickWindow : Window
     public TypePickWindow()
         : this(
             "Підготувати документи на списання майна",
-            "Оберіть вид робіт / підставу списання",
+            "",
             WriteOffChoices.All)
     {
     }
@@ -19,7 +19,9 @@ public partial class TypePickWindow : Window
     {
         InitializeComponent();
         Title = title;
-        PromptText.Text = prompt;
+        var p = (prompt ?? "").Trim();
+        PromptText.Text = p;
+        PromptText.Visibility = p.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
         if (choices.Count <= 3)
         {
             Height = 420;

@@ -26,9 +26,8 @@ public partial class DraftListWindow : Window
             .Select(d => new DraftListItem(d))
             .ToList();
         Grid.ItemsSource = items;
-        Hint.Text = items.Count == 0
-            ? "Поки немає збережених документів цього виду. Можна створити новий."
-            : "Відкрийте документ подвійним натисканням або створіть новий. Проведення робиться вже в самому документі.";
+        Hint.Text = "";
+        Hint.Visibility = Visibility.Collapsed;
     }
 
     public static int Count(WriteOffChoice choice) =>

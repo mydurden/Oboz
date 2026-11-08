@@ -19,7 +19,7 @@
                     Content="Погоджуюсь" MinWidth="160"
                     Visibility="Collapsed" IsEnabled="False" Click="AgreeClick"/>
             <TextBlock x:Name="ScrollHint" DockPanel.Dock="Right"
-                       Text="Прокрутіть текст до самого кінця"
+                       Text="" Visibility="Collapsed"
                        VerticalAlignment="Center" Margin="0,0,16,0"
                        Foreground="{DynamicResource Muted}" FontSize="13"/>
         </DockPanel>
