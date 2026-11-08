@@ -90,7 +90,8 @@
                           VirtualizingPanel.VirtualizationMode="Recycling"
                           VirtualizingPanel.ScrollUnit="Item"
                           ScrollViewer.CanContentScroll="True"
-                          MinRowHeight="44">
+                          MinRowHeight="44"
+                          PreviewKeyDown="RowsPreviewKeyDown">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Назва" Binding="{Binding Name}"
                                             SortMemberPath="Name" Width="3*" IsReadOnly="True"

@@ -1,9 +1,61 @@
+using System.Windows.Input;
 using Xunit;
 
 namespace Obozny.Tests;
 
 public class BulkDisplayUomTests
 {
+    [Theory]
+    [InlineData(Key.Left, 3, 0, 0, true)]   // caret на початку → вихід
+    [InlineData(Key.Left, 3, 1, 0, false)]  // caret всередині → лишити
+    [InlineData(Key.Right, 3, 3, 0, true)]  // caret в кінці → вихід
+    [InlineData(Key.Right, 3, 1, 0, false)] // caret всередині → лишити
+    [InlineData(Key.Left, 3, 0, 2, false)]  // є виділення → спочатку згорнути
+    [InlineData(Key.Right, 3, 1, 2, false)] // є виділення → спочатку згорнути
+    [InlineData(Key.Up, 5, 2, 0, true)]
+    [InlineData(Key.Down, 5, 2, 0, true)]
+    [InlineData(Key.Tab, 5, 2, 0, true)]
+    [InlineData(Key.Left, 0, 0, 0, true)]   // порожнє поле
+    [InlineData(Key.Right, 0, 0, 0, true)]
+    public void ShouldNavigateFromTextBox_EdgeRules(
+        Key key, int textLen, int caret, int selLen, bool expected)
+    {
+        Assert.Equal(expected,
+            BulkDisplayUomWindow.ShouldNavigateFromTextBox(key, textLen, caret, selLen));
+    }
+
+    [Fact]
+    public void TryComputeNextCell_ArrowsStopAtEdges()
+    {
+        Assert.False(BulkDisplayUomWindow.TryComputeNextCell(
+            0, 0, 0, -1, 3, 5, wrap: false, out _, out _));
+        Assert.False(BulkDisplayUomWindow.TryComputeNextCell(
+            2, 4, 0, 1, 3, 5, wrap: false, out _, out _));
+        Assert.True(BulkDisplayUomWindow.TryComputeNextCell(
+            1, 3, 0, 1, 3, 5, wrap: false, out var r, out var c));
+        Assert.Equal(1, r);
+        Assert.Equal(4, c);
+        Assert.True(BulkDisplayUomWindow.TryComputeNextCell(
+            1, 4, 1, 0, 3, 5, wrap: false, out r, out c));
+        Assert.Equal(2, r);
+        Assert.Equal(4, c);
+    }
+
+    [Fact]
+    public void TryComputeNextCell_TabWrapsAcrossRows()
+    {
+        Assert.True(BulkDisplayUomWindow.TryComputeNextCell(
+            0, 4, 0, 1, 2, 5, wrap: true, out var r, out var c));
+        Assert.Equal(1, r);
+        Assert.Equal(0, c);
+        Assert.True(BulkDisplayUomWindow.TryComputeNextCell(
+            1, 0, 0, -1, 2, 5, wrap: true, out r, out c));
+        Assert.Equal(0, r);
+        Assert.Equal(4, c);
+        Assert.False(BulkDisplayUomWindow.TryComputeNextCell(
+            1, 4, 0, 1, 2, 5, wrap: true, out _, out _));
+    }
+
     [Theory]
     [InlineData(1000, new double[] { 300, 200, 90, 160, 120 }, 130)]
     [InlineData(870, new double[] { 300, 200, 90, 160, 120 }, 0)]
