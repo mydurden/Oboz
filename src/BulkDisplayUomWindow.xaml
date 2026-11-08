@@ -41,7 +41,7 @@
                      FontSize="22" FontWeight="SemiBold" Margin="0,0,0,6"/>
             <TextBlock FontSize="13" TextWrapping="Wrap"
                        Foreground="{DynamicResource Muted}"
-                       Text="Увесь список номенклатури. О.В. відображення — як на картці (список / «+ Додати О.В.»). Коефіцієнт — введення в клітинку. Сортування кліком по заголовку; фільтр — у рядку над таблицею, строго над своїм стовпчиком. «Зберегти» записує поля картки; «Закрити» — без змін."/>
+                       Text="Увесь список номенклатури. Альтернативні одиниці виміру — як на картці (список / «+ Додати О.В.»). Коефіцієнт — введення в клітинку. Сортування кліком по заголовку; фільтр — у рядку над таблицею, строго над своїм стовпчиком. «Зберегти» записує поля картки; «Закрити» — без змін."/>
             <TextBlock x:Name="SummaryText" FontSize="14" Margin="0,8,0,0"
                        Foreground="{DynamicResource TextPrimary}"/>
         </StackPanel>
@@ -69,9 +69,9 @@
                     <TextBox x:Name="FilterVyd" Grid.Column="1" MinHeight="40" FontSize="14"
                              ToolTip="Фільтр: вид" TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterUnit" Grid.Column="2" MinHeight="40" FontSize="14"
-                             ToolTip="Фільтр: базова О.В." TextChanged="FilterChanged"/>
+                             ToolTip="Фільтр: реальні О.В." TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterDisplay" Grid.Column="3" MinHeight="40" FontSize="14"
-                             ToolTip="Фільтр: О.В. відображення" TextChanged="FilterChanged"/>
+                             ToolTip="Фільтр: альтернативні О.В." TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterFactor" Grid.Column="4" MinHeight="40" FontSize="14"
                              ToolTip="Фільтр: коефіцієнт" TextChanged="FilterChanged"/>
                 </Grid>
@@ -98,11 +98,11 @@
                         <DataGridTextColumn Header="Вид" Binding="{Binding VydText}"
                                             SortMemberPath="VydText" Width="2*" IsReadOnly="True"
                                             ElementStyle="{StaticResource CellLeft}"/>
-                        <DataGridTextColumn Header="Базова О.В." Binding="{Binding Unit}"
+                        <DataGridTextColumn Header="Реальні О.В." Binding="{Binding Unit}"
                                             SortMemberPath="Unit" Width="90" IsReadOnly="True"
                                             ElementStyle="{StaticResource CellCenter}"/>
                         <!-- Combo в CellTemplate; IsReadOnly=True — без edit-mode DataGrid. -->
-                        <DataGridTemplateColumn Header="О.В. відображення" Width="160"
+                        <DataGridTemplateColumn Header="Альтернативні О.В." Width="160"
                                                 SortMemberPath="SelectedDisplayUnit" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -110,7 +110,7 @@
                                               ItemsSource="{Binding DisplayChoices}"
                                               SelectedItem="{Binding SelectedDisplayUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                               IsSynchronizedWithCurrentItem="False"
-                                              ToolTip="О.В. відображення (як на картці). «+ Додати О.В.» — нова для виду."
+                                              ToolTip="Альтернативні О.В. (як на картці). «+ Додати О.В.» — нова для виду."
                                               SelectionChanged="DisplayUnitComboChanged"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
