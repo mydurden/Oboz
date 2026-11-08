@@ -123,11 +123,9 @@ public partial class AccountingBookWindow : Window
         }
         catch (Exception ex)
         {
-            CrashLog.Write("AccountingBookWindow.SummaryStatementClick", ex);
             MessageBox.Show(this,
                 "Не вдалося сформувати узагальнюючу відомість.\n" +
-                (string.IsNullOrWhiteSpace(ex.Message) ? ex.GetType().Name : ex.Message) +
-                "\n\nДеталі: " + CrashLog.LogPath,
+                (string.IsNullOrWhiteSpace(ex.Message) ? ex.GetType().Name : ex.Message),
                 "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }

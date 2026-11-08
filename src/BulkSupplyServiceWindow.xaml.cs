@@ -179,7 +179,6 @@ public partial class BulkSupplyServiceWindow : Window
         }
         catch (Exception ex)
         {
-            CrashLog.Write("BulkSupplyServiceWindow.Save", ex);
             MessageBox.Show("Не вдалося зберегти:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }

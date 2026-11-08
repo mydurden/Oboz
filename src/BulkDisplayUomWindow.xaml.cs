@@ -448,7 +448,6 @@ public partial class BulkDisplayUomWindow : Window
         }
         catch (Exception ex)
         {
-            CrashLog.Write("BulkDisplayUomWindow.Save", ex);
             MessageBox.Show("Не вдалося зберегти:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }

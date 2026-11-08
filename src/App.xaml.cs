@@ -15,12 +15,10 @@ public partial class App : Application
 
         DispatcherUnhandledException += (_, args) =>
         {
-            CrashLog.Write("DispatcherUnhandledException", args.Exception);
             try
             {
                 MessageBox.Show(
-                    "Неочікувана помилка:\n" + args.Exception.Message +
-                    "\n\nДеталі: " + CrashLog.LogPath,
+                    "Неочікувана помилка:\n" + args.Exception.Message,
                     "Обозний",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
@@ -30,8 +28,18 @@ public partial class App : Application
         };
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
-            CrashLog.Write("AppDomain.UnhandledException", args.ExceptionObject as Exception,
-                detail: args.ExceptionObject?.ToString());
+            try
+            {
+                var msg = (args.ExceptionObject as Exception)?.Message
+                    ?? args.ExceptionObject?.ToString()
+                    ?? "невідома помилка";
+                MessageBox.Show(
+                    "Критична помилка:\n" + msg,
+                    "Обозний",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            catch { /* ignore */ }
         };
 
         // Мінімальне вікно одразу — старт не «висить» без UI.
