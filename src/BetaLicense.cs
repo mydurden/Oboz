@@ -134,14 +134,17 @@ internal static class BetaLicense
         if (s.BetaTermsAcceptedAt != null && !string.IsNullOrWhiteSpace(s.BetaSeal))
         {
             var day = s.BetaTermsAcceptedAt.Value.Date;
-            if (day > DateTime.Today || !BetaSeal.Verify(day, s.BetaSeal))
+            if (day > DateTime.Today)
             {
                 _tamperedOrLocked = true;
                 return;
             }
 
+            // Печатка без MachineGuid. Старі seal (з прив'язкою до ПК) лишаємо як є — дані відкриваються.
+            if (BetaSeal.Verify(day, s.BetaSeal))
+                SyncSettings(day, s.BetaSeal);
+
             _startDate = day;
-            SyncSettings(day, s.BetaSeal);
             return;
         }
 
