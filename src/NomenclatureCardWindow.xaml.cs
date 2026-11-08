@@ -120,11 +120,9 @@ public partial class NomenclatureCardWindow : Window
             _vydChangedByUser = true;
             _lastRealVyd = vyd;
             FillDisplayUnitCombo(vyd, DisplayUnitBox.SelectedItem as string);
-            CrashLog.Write("VydChanged", detail: "vyd=" + vyd);
         }
         catch (Exception ex)
         {
-            CrashLog.Write("VydChanged", ex);
             MessageBox.Show("Помилка при зміні Виду:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -157,7 +155,6 @@ public partial class NomenclatureCardWindow : Window
         }
         catch (Exception ex)
         {
-            CrashLog.Write("HandleNewVydPick", ex);
             RestoreLastVyd();
             MessageBox.Show("Не вдалося додати вид:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
@@ -219,24 +216,18 @@ public partial class NomenclatureCardWindow : Window
     {
         try
         {
-            CrashLog.Write("OfferBulkAssignVyd.enter", detail: "vyd=" + selectedVyd);
             AppStore.Instance.EnsureNomenclatures();
             var others = NomenclatureWithoutVyd.Others(AppStore.Instance.Data.Nomenclatures, excludeId);
             var matched = NomenclatureVydNameMatch.FilterByName(
                 others, selectedVyd, AppStore.Instance.Data.VydKeywords);
-            CrashLog.Write("OfferBulkAssignVyd.others",
-                detail: $"all={others.Count} matched={matched.Count}");
             if (matched.Count == 0) return;
 
             VydBox.IsDropDownOpen = false;
-            CrashLog.Write("OfferBulkAssignVyd.ShowDialog");
             var dlg = new AssignVydBulkWindow(others, matched, selectedVyd) { Owner = this };
             dlg.ShowDialog();
-            CrashLog.Write("OfferBulkAssignVyd.ShowDialog.done");
         }
         catch (Exception ex)
         {
-            CrashLog.Write("OfferBulkAssignVyd", ex);
             MessageBox.Show("Помилка діалогу масового призначення:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -309,7 +300,6 @@ public partial class NomenclatureCardWindow : Window
         }
         catch (Exception ex)
         {
-            CrashLog.Write("SaveClick", ex);
             MessageBox.Show("Не вдалося зберегти:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }

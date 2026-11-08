@@ -24,50 +24,37 @@ public partial class AssignVydBulkWindow : Window
         IReadOnlyList<NomenclatureItem> nameMatched,
         string suggestedVyd)
     {
-        try
+        InitializeComponent();
+        var custom = AppStore.Instance.Data.CustomVyds;
+        var catalog = NomenclatureVydCatalog.Combined(custom);
+        var suggested = (suggestedVyd ?? "").Trim();
+        if (suggested.Length == 0
+            || NomenclatureVydCatalog.IsNewItem(suggested)
+            || !catalog.Contains(suggested, StringComparer.Ordinal))
+            suggested = catalog.Count > 0 ? catalog[0] : NomenclatureVydCatalog.All[0];
+
+        foreach (var vyd in NomenclatureVydCatalog.ComboChoices(custom))
+            VydForAllBox.Items.Add(vyd);
+        VydForAllBox.SelectedItem = suggested;
+        _lastRealVyd = suggested;
+        VydForAllBox.SelectionChanged += VydForAllChanged;
+
+        foreach (var id in nameMatched.Select(n => n.Id))
+            _nameMatchIds.Add(id);
+        foreach (var n in allWithoutVyd)
         {
-            CrashLog.Write("AssignVydBulkWindow.ctor",
-                detail: $"all={allWithoutVyd.Count} matched={nameMatched.Count}");
-            InitializeComponent();
-            var custom = AppStore.Instance.Data.CustomVyds;
-            var catalog = NomenclatureVydCatalog.Combined(custom);
-            var suggested = (suggestedVyd ?? "").Trim();
-            if (suggested.Length == 0
-                || NomenclatureVydCatalog.IsNewItem(suggested)
-                || !catalog.Contains(suggested, StringComparer.Ordinal))
-                suggested = catalog.Count > 0 ? catalog[0] : NomenclatureVydCatalog.All[0];
-
-            foreach (var vyd in NomenclatureVydCatalog.ComboChoices(custom))
-                VydForAllBox.Items.Add(vyd);
-            VydForAllBox.SelectedItem = suggested;
-            _lastRealVyd = suggested;
-            VydForAllBox.SelectionChanged += VydForAllChanged;
-
-            foreach (var id in nameMatched.Select(n => n.Id))
-                _nameMatchIds.Add(id);
-            foreach (var n in allWithoutVyd)
-            {
-                var row = new AssignVydRow(
-                    n.Id,
-                    n.Name,
-                    n.Unit,
-                    NomenclatureKindNames.Of(n.Kind),
-                    isSelected: _nameMatchIds.Contains(n.Id));
-                _allRows.Add(row);
-            }
-
-            ModeByName.IsChecked = true;
-            _ready = true;
-            ApplyVisibleList(byNameOnly: true);
-
-            CrashLog.Write("AssignVydBulkWindow.ctor.ok",
-                detail: $"visible={_visible.Count} suggested={suggested}");
+            var row = new AssignVydRow(
+                n.Id,
+                n.Name,
+                n.Unit,
+                NomenclatureKindNames.Of(n.Kind),
+                isSelected: _nameMatchIds.Contains(n.Id));
+            _allRows.Add(row);
         }
-        catch (Exception ex)
-        {
-            CrashLog.Write("AssignVydBulkWindow.ctor", ex);
-            throw;
-        }
+
+        ModeByName.IsChecked = true;
+        _ready = true;
+        ApplyVisibleList(byNameOnly: true);
     }
 
     /// <summary>Копія довідника (не спільний масив) — для тестів / майбутніх комбо.</summary>
@@ -217,7 +204,6 @@ public partial class AssignVydBulkWindow : Window
             // 0 галочок — закрити без призначень (як «Скасувати» за ефектом).
             if (selected.Count == 0)
             {
-                CrashLog.Write("AssignVydBulkWindow.Save", detail: "count=0 close-no-op");
                 DialogResult = false;
                 return;
             }
@@ -231,13 +217,11 @@ public partial class AssignVydBulkWindow : Window
             }
 
             var assignments = selected.Select(r => (r.Id, vyd)).ToList();
-            CrashLog.Write("AssignVydBulkWindow.Save", detail: $"count={assignments.Count} vyd={vyd}");
             AppStore.Instance.AssignNomenclatureVyds(assignments);
             DialogResult = true;
         }
         catch (Exception ex)
         {
-            CrashLog.Write("AssignVydBulkWindow.Save", ex);
             MessageBox.Show("Не вдалося зберегти види:\n" + ex.Message, "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }

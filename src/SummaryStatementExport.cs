@@ -19,7 +19,6 @@ internal static class SummaryStatementExport
         }
         catch (Exception ex)
         {
-            CrashLog.Write("SummaryStatementExport.Save", ex);
             MessageBox.Show(owner, FormatSaveError(ex), "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -83,7 +82,6 @@ internal static class SummaryStatementExport
         }
         catch (Exception ex)
         {
-            CrashLog.Write("SummaryStatementExport.SaveCore", ex, detail: target);
             MessageBox.Show(owner, FormatSaveError(ex), "Обозний",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -110,7 +108,6 @@ internal static class SummaryStatementExport
         }
         if (!string.IsNullOrWhiteSpace(ex.Message))
             sb.AppendLine(ex.Message);
-        sb.AppendLine().Append("Деталі: ").Append(CrashLog.LogPath);
         return sb.ToString();
     }
 
