@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.ImportBulkReviewWindow"
+﻿<Window x:Class="Obozny.ImportBulkReviewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Перевірка руху майна" Height="720" Width="1180"
@@ -25,7 +25,6 @@
             <TextBlock Text="Служба забезпечення"
                        Margin="0,12,0,4" Foreground="{DynamicResource TextPrimary}"/>
             <ComboBox x:Name="SupplyAllBox" MinHeight="40" FontSize="15" HorizontalAlignment="Left" MinWidth="280"
-                      ToolTip="Застосувати обрану службу до всіх рядків таблиці."
                       SelectionChanged="SupplyAllChanged"/>
         </StackPanel>
 

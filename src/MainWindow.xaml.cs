@@ -195,7 +195,7 @@ public partial class MainWindow : Window
                 ViewMode.Movements => "Рух майна",
                 ViewMode.Strongpoints => "Облік опорних пунктів",
                 ViewMode.FixedAssets => "Основні засоби",
-                _ => "Залишки на складі"
+                _ => "Залишки на складі та зарезервоване майно"
             };
             subtitle = _view switch
             {
@@ -537,9 +537,6 @@ public partial class MainWindow : Window
     {
         if (DraftOzItem == null) return;
         DraftOzItem.IsChecked = _draftIncludeOz;
-        DraftOzItem.ToolTip = _draftIncludeOz
-            ? "Увімкнено — у переліку запаси та основні засоби. Вимкніть, щоб знову лише запаси."
-            : "Вимкнено — у переліку лише запаси. Увімкніть, щоб додавати також основні засоби.";
     }
 
     private void ShowDraft()
@@ -578,9 +575,6 @@ public partial class MainWindow : Window
             : qc
                 ? "Акт зміни якісного стану"
                 : "№";
-        VrActNumberBox.ToolTip = qc
-            ? "Номер Акта ВР. Порожньо — у документі буде «н/д» (не вигадується). Дата ВР = дата ЗЯС."
-            : "Номер Акта ВР. Порожньо — у документі буде «н/д» (не вигадується). Дата ВР = дата ЯС.";
         if (OpDocsItem != null)
             OpDocsItem.Visibility = qs ? Visibility.Visible : Visibility.Collapsed;
         if (VrActFromDraftItem != null)
@@ -1049,7 +1043,6 @@ public partial class MainWindow : Window
             FontSize = 20,
             Margin = new Thickness(4, 0, 0, 0),
             VerticalAlignment = VerticalAlignment.Center,
-            ToolTip = "Видалити споруду",
             Tag = s.Id,
             Style = (Style)FindResource("ChipDeleteButton")
         };
@@ -1075,8 +1068,7 @@ public partial class MainWindow : Window
                 BorderThickness = new Thickness(0),
                 CaretBrush = TabNameFilled,
                 Foreground = text,
-                Tag = captured,
-                ToolTip = "Назва споруди. Кількість: додайте (2), — 2 або 2 шт у кінці"
+                Tag = captured
             };
             box.AcceptsReturn = false;
             box.TextChanged += ActiveStructureTabTextChanged;
@@ -2057,23 +2049,19 @@ public partial class MainWindow : Window
             if (key == "Quantity")
             {
                 block.Text = Ua.FormatQty(qty);
-                block.ToolTip = "Сума кількості";
             }
             else if (key == "UnitPrice")
             {
                 block.Text = Ua.Num(value, "#,##0.00");
-                block.ToolTip = "Сума вартості (кількість × ціна)";
             }
             else if (!labeled)
             {
                 block.Text = "Разом";
-                block.ToolTip = null;
                 labeled = true;
             }
             else
             {
                 block.Text = "";
-                block.ToolTip = null;
             }
         }
         SyncTotalsWidths();
@@ -2500,8 +2488,7 @@ public partial class MainWindow : Window
             Style = (Style)FindResource("CompactIconButton"),
             HorizontalAlignment = HorizontalAlignment.Right,
             VerticalAlignment = VerticalAlignment.Center,
-            Tag = key,
-            ToolTip = "Сортування"
+            Tag = key
         };
         btn.Click += (_, e) =>
         {
@@ -2822,8 +2809,7 @@ public partial class MainWindow : Window
                 Style = (Style)FindResource("FilterClearButton"),
                 Content = CreateTrashGlyph(),
                 HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                ToolTip = "Очистити фільтр"
+                VerticalAlignment = VerticalAlignment.Stretch
             };
             box.Tag = clearBtn;
             PaintFilterBox(box);

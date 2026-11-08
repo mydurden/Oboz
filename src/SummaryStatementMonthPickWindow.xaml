@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.SummaryStatementMonthPickWindow"
+﻿<Window x:Class="Obozny.SummaryStatementMonthPickWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Узагальнююча відомість (Додаток 1)"
@@ -50,8 +50,7 @@
                                VerticalAlignment="Center" Margin="0,0,8,0"
                                DockPanel.Dock="Left"/>
                     <TextBox x:Name="NumberBox" MinHeight="40" Height="40"
-                             FontSize="14" VerticalContentAlignment="Center"
-                             ToolTip="Порожньо — місце під рукопис"/>
+                             FontSize="14" VerticalContentAlignment="Center"/>
                 </DockPanel>
             </Grid>
 

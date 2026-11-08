@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.StickerWindow"
+﻿<Window x:Class="Obozny.StickerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Стікер"
@@ -21,14 +21,14 @@
                 <Button x:Name="CloseBtn" Content="&#xE74D;" Width="28" Height="24" MinWidth="28" MinHeight="24"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"
                         Padding="0" FontSize="14" FontFamily="Segoe MDL2 Assets"
-                        Background="#22000000" Foreground="#2C241F" Click="DeleteSticker" ToolTip="Видалити стікер"/>
+                        Background="#22000000" Foreground="#2C241F" Click="DeleteSticker"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0">
                     <Button x:Name="MenuBtn" Content="⋯" Width="28" Height="24" MinHeight="24" MinWidth="28" Margin="0,0,4,0"
                             FontSize="16" FontWeight="Bold" Padding="0" FontFamily="Segoe UI"
-                            Background="#22000000" Foreground="#2C241F" Click="OpenMenu" ToolTip="Налаштування"/>
+                            Background="#22000000" Foreground="#2C241F" Click="OpenMenu"/>
                     <Button x:Name="CollapseBtn" Content="−" Width="28" Height="24" MinWidth="28" MinHeight="24"
                             Padding="0" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"
-                            Background="#22000000" Foreground="#2C241F" Click="CollapseClick" ToolTip="Згорнути"/>
+                            Background="#22000000" Foreground="#2C241F" Click="CollapseClick"/>
                 </StackPanel>
                 <Popup x:Name="MenuPopup" PlacementTarget="{Binding ElementName=MenuBtn}" Placement="Bottom"
                        StaysOpen="False" AllowsTransparency="True">
@@ -48,30 +48,30 @@
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="FontMinusBtn" Content="−" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" FontSize="16"
-                                Background="#22000000" Foreground="#2C241F" Click="FontMinus" ToolTip="Зменшити шрифт"/>
+                                Background="#22000000" Foreground="#2C241F" Click="FontMinus"/>
                         <TextBlock x:Name="FontSizeLabel" Text="16" Width="28" TextAlignment="Center"
                                    VerticalAlignment="Center" Foreground="#2C241F" FontSize="13" Margin="2,0"/>
                         <Button x:Name="FontPlusBtn" Content="+" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" FontSize="16"
-                                Background="#22000000" Foreground="#2C241F" Click="FontPlus" ToolTip="Збільшити шрифт"/>
+                                Background="#22000000" Foreground="#2C241F" Click="FontPlus"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Button x:Name="BoldBtn" Content="B" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" FontWeight="Bold" FontSize="14"
-                                Background="#22000000" Foreground="#2C241F" Click="FmtBold" ToolTip="Жирний"/>
+                                Background="#22000000" Foreground="#2C241F" Click="FmtBold"/>
                         <Button x:Name="ItalicBtn" Content="I" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" FontStyle="Italic" FontSize="14"
-                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="FmtItalic" ToolTip="Курсив"/>
+                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="FmtItalic"/>
                         <Button x:Name="UnderlineBtn" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" Background="#22000000"
-                                Margin="3,0,0,0" Click="FmtUnderline" ToolTip="Підкреслений">
+                                Margin="3,0,0,0" Click="FmtUnderline">
                             <TextBlock x:Name="UnderlineGlyph" Text="U" TextDecorations="Underline" Foreground="#2C241F" FontSize="14"/>
                         </Button>
                         <Button x:Name="StrikeBtn" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" Background="#22000000"
-                                Margin="3,0,0,0" Click="FmtStrike" ToolTip="Закреслений">
+                                Margin="3,0,0,0" Click="FmtStrike">
                             <TextBlock x:Name="StrikeGlyph" Text="S" TextDecorations="Strikethrough" Foreground="#2C241F" FontSize="14"/>
                         </Button>
                         <Button x:Name="ListBtn" Content="≡" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0" FontSize="14"
-                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="FmtList" ToolTip="Список"/>
+                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="FmtList"/>
                         <Button x:Name="LinkBtn" Content="&#xE71B;" Width="28" Height="28" MinHeight="28" MinWidth="28" Padding="0"
                                 FontSize="14" FontFamily="Segoe MDL2 Assets"
-                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="EditLink" ToolTip="Посилання"/>
+                                Background="#22000000" Foreground="#2C241F" Margin="3,0,0,0" Click="EditLink"/>
                     </StackPanel>
                 </DockPanel>
             </Border>

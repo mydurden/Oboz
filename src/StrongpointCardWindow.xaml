@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.StrongpointCardWindow"
+﻿<Window x:Class="Obozny.StrongpointCardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Картка опорного пункту" Height="640" Width="920"
@@ -48,12 +48,10 @@
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,0,10">
             <Button x:Name="OpenYasBtn" Content="Акт ЯС" Style="{StaticResource GhostButton}"
                     MinWidth="140" MinHeight="44" Margin="0,0,8,0"
-                    Click="OpenPrimaryYasClick"
-                    ToolTip="Відкрити акт якісного стану цього опорного пункту"/>
+                    Click="OpenPrimaryYasClick"/>
             <Button Content="Акт ВР" Style="{StaticResource GhostButton}"
                     MinWidth="140" MinHeight="44"
-                    Click="OpenVrClick"
-                    ToolTip="Перегляд і друк зведеного переліку майна (без вартості)"/>
+                    Click="OpenVrClick"/>
         </StackPanel>
 
         <DataGrid x:Name="DocsGrid" Grid.Row="5" IsReadOnly="True" AutoGenerateColumns="False"

@@ -1,4 +1,4 @@
-<Application x:Class="Obozny.App"
+﻿<Application x:Class="Obozny.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Obozny">
@@ -237,7 +237,6 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="ToolTip" Value="Видалити споруду"/>
         </Style>
 
         <!-- Корзинка очищення в полях фільтра таблиці: зона ~40×40, прозорий фон над полем -->

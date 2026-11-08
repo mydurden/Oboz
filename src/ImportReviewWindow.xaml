@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.ImportReviewWindow"
+﻿<Window x:Class="Obozny.ImportReviewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Перевірка документа" Height="600" Width="900"
@@ -42,8 +42,7 @@
             <StackPanel Grid.Column="2">
                 <TextBlock Text="Служба забезпечення" Margin="0,0,0,4"
                            Foreground="{DynamicResource TextPrimary}"/>
-                <ComboBox x:Name="SupplyBox" MinHeight="40" FontSize="14"
-                          ToolTip="Авто з поля «Передає»; можна виправити перед збереженням."/>
+                <ComboBox x:Name="SupplyBox" MinHeight="40" FontSize="14"/>
             </StackPanel>
             <StackPanel Grid.Column="4">
                 <TextBlock Text="Дата документа" Margin="0,0,0,4"

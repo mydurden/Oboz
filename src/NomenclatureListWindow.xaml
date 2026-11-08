@@ -18,7 +18,7 @@
                        Foreground="{DynamicResource TextPrimary}"/>
             <TextBlock Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap"
                        Foreground="{DynamicResource Muted}"
-                       Text="Назва, вид майна, одиниця виміру та тип майна (запаси або основні засоби). Категорія якості (І/ІІ/ІІІ) лишається на картках майна."/>
+                       Text="Тут ви можете налаштувати додаткову інформацію по номенклатурі майна, а саме: альтернативні одиниці виміру, вид майна (група), тип майна (запаси або основні засоби)."/>
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="0,12,0,8">
@@ -28,8 +28,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="SearchBox" MinHeight="40" FontSize="15"
-                     TextChanged="SearchChanged"
-                     ToolTip="Пошук за назвою, видом або одиницею"/>
+                     TextChanged="SearchChanged"/>
             <Button Grid.Column="2" Content="Нова позиція" MinWidth="160" MinHeight="40" Height="40"
                     FontSize="14" Padding="12,4" Click="AddClick"/>
         </Grid>

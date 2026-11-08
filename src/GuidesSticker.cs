@@ -166,8 +166,6 @@ internal static class StickerText
             switch (inline)
             {
                 case Hyperlink link:
-                    if (link.NavigateUri != null)
-                        link.ToolTip = link.NavigateUri.AbsoluteUri;
                     RememberInlines(link.Inlines);
                     break;
                 case Span span:

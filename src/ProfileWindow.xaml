@@ -1,6 +1,7 @@
 <Window x:Class="Obozny.ProfileWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Obozny"
         Title="Особисті налаштування" Width="460"
         SizeToContent="WidthAndHeight"
         MinWidth="420"
@@ -15,6 +16,15 @@
             <Button Content="Зберегти" MinHeight="32" Height="32" MinWidth="100"
                     FontSize="13" Padding="12,4" Click="Save"/>
         </StackPanel>
+        <TextBlock x:Name="VersionStampBlock"
+                   DockPanel.Dock="Top"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,8"
+                   FontSize="12"
+                   FontFamily="{DynamicResource AppFont}"
+                   Foreground="{DynamicResource Muted}"
+                   Text="{x:Static local:BuildStamp.Value}"/>
         <StackPanel>
             <TextBlock Text="Підрозділ" FontSize="13" Margin="0,0,0,3" Foreground="{DynamicResource Muted}"/>
             <TextBox x:Name="UnitBox" MinHeight="32" Height="32" FontSize="14" Padding="8,4" Margin="0,0,0,10"/>
@@ -46,7 +56,7 @@
             </UniformGrid>
             <UniformGrid x:Name="ThemeGrid" Columns="3" Margin="0,8,0,0" Visibility="Collapsed"/>
 
-            <Button Content="Очистити склад" Style="{StaticResource DangerButton}"
+            <Button Content="Очистка складу" Style="{StaticResource DangerButton}"
                     MinHeight="32" Height="32" FontSize="13" Padding="12,4" Margin="0,14,0,0"
                     Click="ClearStock"/>
         </StackPanel>

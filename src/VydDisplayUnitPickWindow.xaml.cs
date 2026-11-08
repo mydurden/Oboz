@@ -22,11 +22,7 @@ public partial class VydDisplayUnitPickWindow : Window
         InitializeComponent();
         _nomenclatures = nomenclatures.ToList();
         _already = alreadyForVyd.Select(u => (u ?? "").Trim()).Where(u => u.Length > 0).ToList();
-        var vyd = (vydName ?? "").Trim();
-        if (vyd.Length > 0)
-            HintText.Text =
-                $"Вид «{vyd}»: вкажіть свою О.В. або оберіть зі списку тих, що вже є на картках " +
-                "(відмінні від уже заданих для цього виду і від щойно введеного).";
+        _ = vydName;
         RefreshBaseList();
         Loaded += (_, _) => OwnBox.Focus();
     }

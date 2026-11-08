@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.PropertyCardWindow"
+﻿<Window x:Class="Obozny.PropertyCardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Картка майна" Height="620" Width="860"
@@ -27,8 +27,7 @@
             </StackPanel>
             <Button Grid.Column="1" x:Name="NomenclatureBtn" Style="{StaticResource IconButton}"
                     Width="52" Height="52" Margin="12,0,0,0" VerticalAlignment="Top"
-                    Click="OpenNomenclatureClick"
-                    ToolTip="Відкрити картку номенклатури">
+                    Click="OpenNomenclatureClick">
                 <Grid Width="28" Height="28">
                     <!-- Іконка «паспорт / довідник»: аркуш + рядок -->
                     <Border Background="{DynamicResource ButtonFg}" Opacity="0.92"
@@ -47,8 +46,7 @@
             <TextBlock Text="Служба забезпечення" FontSize="13"
                        Foreground="{DynamicResource Muted}" Margin="0,0,0,4"/>
             <ComboBox x:Name="SupplyBox" MinHeight="44" FontSize="15"
-                      SelectionChanged="SupplyChanged"
-                      ToolTip="Служба забезпечення позиції для книги обліку (отримання по Накладній)."/>
+                      SelectionChanged="SupplyChanged"/>
         </StackPanel>
 
         <TextBlock Grid.Row="2" Text="Документи / рух майна" FontSize="16" FontWeight="SemiBold"
