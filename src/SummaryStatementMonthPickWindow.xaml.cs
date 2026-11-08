@@ -76,7 +76,6 @@ public partial class SummaryStatementMonthPickWindow : Window
             {
                 Content = MonthShort[i],
                 Tag = month,
-                ToolTip = MonthNames[i],
                 Style = (Style)FindResource("GhostToggle"),
                 MinHeight = 40,
                 Height = 40,

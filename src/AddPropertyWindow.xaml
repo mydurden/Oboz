@@ -13,9 +13,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,12" Foreground="{DynamicResource Muted}"
-                   Text="Заповніть таблицю вручну або вставте з Excel/Word (Ctrl+V / контекстне меню). Можна виділити кілька клітинок (Shift/Ctrl). Delete — очистити виділене. Після заповнення останнього рядка з’являється новий."/>
-
         <Grid Grid.Row="1" Margin="0,0,0,12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

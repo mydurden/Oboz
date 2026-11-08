@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.DocumentViewWindow"
+﻿<Window x:Class="Obozny.DocumentViewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Документ" Height="600" Width="900"
@@ -35,25 +35,21 @@
                         Visibility="Collapsed" Click="NoteClick"/>
                 <Button x:Name="OpCardBtn" Content="Картка ОП" Style="{StaticResource GhostButton}"
                         MinWidth="140" MinHeight="44" Margin="0,0,8,0"
-                        Visibility="Collapsed" Click="OpenOpCardClick"
-                        ToolTip="Документи опорного пункту: картка, Акт ЯС, Акт ВР"/>
+                        Visibility="Collapsed" Click="OpenOpCardClick"/>
                 <Button x:Name="VrActBtn" Content="Акт ВР" Style="{StaticResource GhostButton}"
                         MinWidth="140" MinHeight="44" Margin="0,0,8,0"
-                        Visibility="Collapsed" Click="OpenVrActClick"
-                        ToolTip="Перегляд парного Акта виконаних робіт (без вартості та категорії)"/>
+                        Visibility="Collapsed" Click="OpenVrActClick"/>
                 <Button x:Name="EditDraftBtn" Content="Відкрити чернетку" Style="{StaticResource GhostButton}"
                         MinWidth="160" MinHeight="44" Margin="0,0,8,0"
                         Visibility="Collapsed" Click="EditDraftClick"/>
                 <Button x:Name="EditPostedBtn" Content="Редагувати" Style="{StaticResource GhostButton}"
                         MinWidth="140" MinHeight="44" Margin="0,0,8,0"
-                        Visibility="Collapsed" Click="EditDraftClick"
-                        ToolTip="Відкрити акт для редагування в чернетці (дата і № ВР — лише там)"/>
+                        Visibility="Collapsed" Click="EditDraftClick"/>
             </StackPanel>
 
             <Button x:Name="ActionsBtn" Content="Виконати дії ▾" Style="{StaticResource GhostButton}"
                     DockPanel.Dock="Right" MinWidth="160" MinHeight="44"
-                    HorizontalAlignment="Right" Click="OpenActions"
-                    ToolTip="Друк, Excel, видалити, закрити">
+                    HorizontalAlignment="Right" Click="OpenActions">
                 <Button.ContextMenu>
                     <ContextMenu x:Name="ActionsMenu" Tag="no-ui-copy">
                         <MenuItem Header="Друк" Click="PrintClick"/>

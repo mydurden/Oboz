@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.StockSummaryVydFilterWindow"
+﻿<Window x:Class="Obozny.StockSummaryVydFilterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Які види показувати"
@@ -67,7 +67,6 @@
                                           MinHeight="40" FontSize="14"
                                           IsSynchronizedWithCurrentItem="False"
                                           IsEnabled="{Binding IsSelected}"
-                                          ToolTip="О.В. відображення для підсумку. «+ Додати О.В.» — нова для цього виду."
                                           SelectionChanged="DisplayUnitComboChanged"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

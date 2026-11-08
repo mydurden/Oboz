@@ -50,8 +50,7 @@
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Коефіцієнт" FontSize="13"
                                    Foreground="{DynamicResource Muted}" Margin="0,0,0,4"/>
-                        <TextBox x:Name="FactorBox" MinHeight="40" FontSize="16"
-                                 ToolTip="Скільки одиниць відображення в 1 офіційній О.В. Порожньо — не рахувати у зведенні."/>
+                        <TextBox x:Name="FactorBox" MinHeight="40" FontSize="16"/>
                     </StackPanel>
                 </Grid>
 
@@ -64,8 +63,7 @@
                     <StackPanel>
                         <TextBlock Text="Одиниця виміру" FontSize="13"
                                    Foreground="{DynamicResource Muted}" Margin="0,0,0,4"/>
-                        <TextBox x:Name="UnitBox" MinHeight="40" FontSize="16"
-                                 ToolTip="Офіційна О.В. Програма сама її не змінює."/>
+                        <TextBox x:Name="UnitBox" MinHeight="40" FontSize="16"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Тип майна" FontSize="13"
@@ -78,10 +76,6 @@
                 <TextBox x:Name="NoteBox" MinHeight="72" FontSize="15" TextWrapping="Wrap"
                          AcceptsReturn="True" VerticalContentAlignment="Top"
                          Padding="8,8" Margin="0,0,0,12"/>
-
-                <TextBlock x:Name="HintText" FontSize="13" TextWrapping="Wrap"
-                           Foreground="{DynamicResource Muted}"
-                           Text="Офіційна О.В. — з документів; альтернативні одиниці виміру і коефіцієнт — для зручного підсумку в «Зведених залишках» (скільки альтернативних у 1 офіційній). Вид підставляє Тип (ОЗ/Запаси); Тип можна змінити. «+ Новий вид майна» — додати свій вид."/>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

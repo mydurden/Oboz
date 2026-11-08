@@ -77,7 +77,6 @@ public partial class StickerWindow : Window
                 Background = BrushOf(sw.Body),
                 BorderBrush = BrushOf(sw.Accent),
                 BorderThickness = new Thickness(3),
-                ToolTip = sw.Label,
                 Tag = sw.Key,
                 Padding = new Thickness(0)
             };
@@ -739,7 +738,6 @@ public partial class StickerWindow : Window
             link.Inlines.Clear();
             link.Inlines.Add(new Run(dlg.LinkText));
             link.NavigateUri = dlg.Address;
-            link.ToolTip = dlg.Address.AbsoluteUri;
             link.Foreground = StickerText.LinkBrush;
         }
         else if (dlg.Address != null)
@@ -750,7 +748,6 @@ public partial class StickerWindow : Window
             var created = new Hyperlink(new Run(dlg.LinkText), pos)
             {
                 NavigateUri = dlg.Address,
-                ToolTip = dlg.Address.AbsoluteUri,
                 Foreground = StickerText.LinkBrush,
                 TextDecorations = TextDecorations.Underline
             };

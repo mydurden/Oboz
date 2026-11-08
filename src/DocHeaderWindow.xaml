@@ -1,4 +1,4 @@
-<Window x:Class="Obozny.DocHeaderWindow"
+﻿<Window x:Class="Obozny.DocHeaderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Підготувати документ" Height="560" Width="560"
@@ -37,8 +37,7 @@
         <StackPanel x:Name="YasVrNumberPanel" Grid.Row="1" Margin="0,0,0,12" Visibility="Collapsed">
             <TextBlock Text="Акт виконаних робіт" Margin="0,0,0,4"
                        Foreground="{DynamicResource TextPrimary}"/>
-            <TextBox x:Name="VrNumberBox" MinHeight="40" Margin="0,0,0,4"
-                     ToolTip="Порожньо — у документах буде «н/д» (не вигадується)."/>
+            <TextBox x:Name="VrNumberBox" MinHeight="40" Margin="0,0,0,4"/>
             <TextBlock Text="Порожньо — у документі буде «н/д»"
                        FontSize="12" Foreground="{DynamicResource Muted}"
                        TextWrapping="Wrap" Margin="0,0,0,12"/>
