@@ -543,7 +543,10 @@ internal static class ExcelImporter
             {
                 var n = Norm(CellText(ws.Cell(r, c)));
                 if (!(n.Contains("накладна") && (n.Contains("вимог") || n.Contains("№")))) continue;
-                for (var k = c + 1; k <= Math.Min(c + 4, lastCol); k++)
+                // Перше непорожнє праворуч до кінця рядка: після merge ярлика
+                // (напр. I7:M7) номер може бути далі ніж c+4 (N7). Ближчий
+                // непорожній усе одно виграє — старі шаблони не ламаються.
+                for (var k = c + 1; k <= lastCol; k++)
                 {
                     var num = Compact(CellText(ws.Cell(r, k)));
                     if (!string.IsNullOrWhiteSpace(num) && !Norm(num).Contains("накладна"))

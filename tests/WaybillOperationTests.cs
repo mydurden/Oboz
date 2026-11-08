@@ -116,6 +116,74 @@ public class WaybillOperationTests
         }
     }
 
+    /// <summary>
+    /// Регресія: merge ярлика I7:M7 зсуває номер на N7 (+5), старе вікно c+1..c+4 пропускало.
+    /// </summary>
+    [Fact]
+    public void Read_merged_nakladna_label_picks_number_past_merge()
+    {
+        var path = Path.Combine(Path.GetTempPath(), "obozny-nakladna-merge-" + Guid.NewGuid().ToString("N") + ".xlsx");
+        try
+        {
+            using (var wb = new XLWorkbook())
+            {
+                var ws = wb.AddWorksheet("Аркуш1");
+                ws.Range(7, 9, 7, 13).Merge(); // I7:M7
+                ws.Cell(7, 9).Value = "Накладна (вимога) № ";
+                ws.Cell(7, 14).Value = "1306/26"; // N7
+                ws.Cell(18, 2).Value = "Вид операції: видача";
+                ws.Cell(23, 3).Value = "Назва військового майна";
+                ws.Cell(23, 7).Value = "Одиниця виміру";
+                ws.Cell(23, 11).Value = "Кількість";
+                ws.Cell(25, 3).Value = "5,45Х39ММ ПАТРОН";
+                ws.Cell(25, 7).Value = "шт";
+                ws.Cell(25, 11).Value = 9;
+                wb.SaveAs(path);
+            }
+
+            var rows = ExcelImporter.Read(path);
+            Assert.NotEmpty(rows);
+            Assert.Equal("1306/26", rows[0].Number);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
+    }
+
+    /// <summary>Ближчий номер праворуч від ярлика лишається пріоритетним (старі шаблони).</summary>
+    [Fact]
+    public void Read_nakladna_prefers_closer_number_over_farther()
+    {
+        var path = Path.Combine(Path.GetTempPath(), "obozny-nakladna-near-" + Guid.NewGuid().ToString("N") + ".xlsx");
+        try
+        {
+            using (var wb = new XLWorkbook())
+            {
+                var ws = wb.AddWorksheet("Накладна");
+                ws.Cell(12, 9).Value = "Накладна (вимога) №";
+                ws.Cell(12, 10).Value = "2426/1395";
+                ws.Cell(12, 14).Value = "9999/99"; // далі — не повинен перебити
+                ws.Cell(18, 2).Value = "Вид операції: видача";
+                ws.Cell(22, 3).Value = "Назва військового майна";
+                ws.Cell(22, 7).Value = "Одиниця виміру";
+                ws.Cell(22, 11).Value = "Кількість";
+                ws.Cell(25, 3).Value = "Кутик";
+                ws.Cell(25, 7).Value = "т";
+                ws.Cell(25, 11).Value = 1;
+                wb.SaveAs(path);
+            }
+
+            var rows = ExcelImporter.Read(path);
+            Assert.NotEmpty(rows);
+            Assert.Equal("2426/1395", rows[0].Number);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
+    }
+
     [Theory]
     [InlineData("Передає: СОВТ та МСВ", "СОВТ та МСВ")]
     [InlineData("Передає: Інженерний склад в/ч А4638", "Інженерний склад в/ч А4638")]
