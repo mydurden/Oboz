@@ -2,7 +2,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Obozny;
@@ -183,6 +186,195 @@ public partial class BulkDisplayUomWindow : Window
                     col.SortDirection = s.Direction;
             }
         }
+    }
+
+    private void RowsPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (!_ready) return;
+        if (e.Key is not (Key.Left or Key.Right or Key.Up or Key.Down or Key.Tab))
+            return;
+
+        // Відкритий список Combo — стрілки лишаємо йому.
+        if (FindAncestor<ComboBox>(e.OriginalSource as DependencyObject) is { IsDropDownOpen: true })
+            return;
+
+        if (!TryResolveCell(e.OriginalSource as DependencyObject, out var rowIndex, out var colIndex))
+            return;
+
+        if (e.OriginalSource is TextBox tb
+            && !ShouldNavigateFromTextBox(e.Key, tb.Text?.Length ?? 0, tb.CaretIndex, tb.SelectionLength))
+            return;
+
+        var colCount = RowsGrid.Columns.Count;
+        var rowCount = RowsGrid.Items.Count;
+        if (colCount == 0 || rowCount == 0) return;
+
+        int dRow = 0, dCol = 0;
+        var wrap = false;
+        switch (e.Key)
+        {
+            case Key.Left: dCol = -1; break;
+            case Key.Right: dCol = 1; break;
+            case Key.Up: dRow = -1; break;
+            case Key.Down: dRow = 1; break;
+            case Key.Tab:
+                wrap = true;
+                dCol = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? -1 : 1;
+                break;
+            default:
+                return;
+        }
+
+        if (!TryComputeNextCell(rowIndex, colIndex, dRow, dCol, rowCount, colCount, wrap,
+                out var nextRow, out var nextCol))
+            return;
+
+        if (FocusCell(nextRow, nextCol))
+            e.Handled = true;
+    }
+
+    /// <summary>
+    /// Стрілки в TextBox: усередині тексту / при виділенні — caret; лише caret на краю без виділення — вихід.
+    /// Up/Down/Tab завжди навігація.
+    /// </summary>
+    internal static bool ShouldNavigateFromTextBox(
+        Key key, int textLength, int caretIndex, int selectionLength)
+    {
+        if (key is Key.Up or Key.Down or Key.Tab)
+            return true;
+        if (key is not (Key.Left or Key.Right))
+            return false;
+
+        // Є виділення — спочатку згорнути caret у TextBox, не стрибати в іншу клітинку.
+        if (selectionLength > 0)
+            return false;
+
+        textLength = Math.Max(0, textLength);
+        var caret = Math.Clamp(caretIndex, 0, textLength);
+        if (key == Key.Left)
+            return caret <= 0;
+        return caret >= textLength;
+    }
+
+    /// <summary>
+    /// Наступна клітинка. Без wrap — стоп на краю. З wrap (Tab) — перехід на сусідній рядок.
+    /// </summary>
+    internal static bool TryComputeNextCell(
+        int row, int col, int dRow, int dCol,
+        int rowCount, int colCount, bool wrap,
+        out int nextRow, out int nextCol)
+    {
+        nextRow = row;
+        nextCol = col;
+        if (rowCount <= 0 || colCount <= 0) return false;
+        if (row < 0 || row >= rowCount || col < 0 || col >= colCount) return false;
+
+        if (wrap && dCol != 0 && dRow == 0)
+        {
+            var linear = row * colCount + col + dCol;
+            if (linear < 0 || linear >= rowCount * colCount) return false;
+            nextRow = linear / colCount;
+            nextCol = linear % colCount;
+            return nextRow != row || nextCol != col;
+        }
+
+        nextRow = row + dRow;
+        nextCol = col + dCol;
+        if (nextRow < 0 || nextRow >= rowCount || nextCol < 0 || nextCol >= colCount)
+            return false;
+        return true;
+    }
+
+    private bool TryResolveCell(DependencyObject? source, out int rowIndex, out int colIndex)
+    {
+        rowIndex = -1;
+        colIndex = -1;
+        var cell = FindAncestor<DataGridCell>(source);
+        if (cell == null) return false;
+
+        colIndex = cell.Column?.DisplayIndex ?? -1;
+        if (colIndex < 0) return false;
+
+        var row = FindAncestor<DataGridRow>(cell);
+        if (row?.Item == null) return false;
+        rowIndex = RowsGrid.Items.IndexOf(row.Item);
+        return rowIndex >= 0;
+    }
+
+    private bool FocusCell(int rowIndex, int colIndex)
+    {
+        if (rowIndex < 0 || rowIndex >= RowsGrid.Items.Count) return false;
+        if (colIndex < 0 || colIndex >= RowsGrid.Columns.Count) return false;
+
+        var item = RowsGrid.Items[rowIndex];
+        var column = RowsGrid.Columns[colIndex];
+        RowsGrid.ScrollIntoView(item, column);
+        RowsGrid.UpdateLayout();
+
+        var rowContainer = RowsGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow
+            ?? RowsGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+        if (rowContainer == null)
+        {
+            RowsGrid.ScrollIntoView(item, column);
+            RowsGrid.UpdateLayout();
+            rowContainer = RowsGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow
+                ?? RowsGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+        }
+        if (rowContainer == null) return false;
+
+        rowContainer.UpdateLayout();
+        var cell = GetCell(rowContainer, colIndex);
+        if (cell == null) return false;
+
+        RowsGrid.CurrentCell = new DataGridCellInfo(item, column);
+        RowsGrid.SelectedItem = item;
+
+        var focusTarget = FindFocusableInCell(cell) ?? (UIElement)cell;
+        return focusTarget.Focus();
+    }
+
+    private static DataGridCell? GetCell(DataGridRow row, int columnIndex)
+    {
+        var presenter = FindVisualChild<DataGridCellsPresenter>(row);
+        if (presenter == null)
+        {
+            row.ApplyTemplate();
+            presenter = FindVisualChild<DataGridCellsPresenter>(row);
+        }
+        if (presenter == null) return null;
+        presenter.UpdateLayout();
+        return presenter.ItemContainerGenerator.ContainerFromIndex(columnIndex) as DataGridCell;
+    }
+
+    private static UIElement? FindFocusableInCell(DataGridCell cell)
+    {
+        if (cell.Content is UIElement direct
+            && (direct is TextBox or ComboBox))
+            return direct;
+        return FindVisualChild<TextBox>(cell) as UIElement
+            ?? FindVisualChild<ComboBox>(cell);
+    }
+
+    private static T? FindAncestor<T>(DependencyObject? start) where T : DependencyObject
+    {
+        for (var d = start; d != null; d = VisualTreeHelper.GetParent(d))
+        {
+            if (d is T match) return match;
+        }
+        return null;
+    }
+
+    private static T? FindVisualChild<T>(DependencyObject root) where T : DependencyObject
+    {
+        var n = VisualTreeHelper.GetChildrenCount(root);
+        for (var i = 0; i < n; i++)
+        {
+            var child = VisualTreeHelper.GetChild(root, i);
+            if (child is T match) return match;
+            var nested = FindVisualChild<T>(child);
+            if (nested != null) return nested;
+        }
+        return null;
     }
 
     private void DisplayUnitComboChanged(object sender, SelectionChangedEventArgs e)
