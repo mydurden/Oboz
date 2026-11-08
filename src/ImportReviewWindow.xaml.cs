@@ -153,6 +153,21 @@ public partial class ImportReviewWindow : Window
             line.Kind = probe.Kind;
             line.Operation = probe.Operation;
         }
+
+        if (intent is ImportPosting.Accept or ImportPosting.Surrender or ImportPosting.Transfer)
+        {
+            _group.Kind = intent switch
+            {
+                ImportPosting.Accept => ImportMoveKind.Receipt,
+                ImportPosting.Surrender => ImportMoveKind.Return,
+                _ => ImportMoveKind.Transfer
+            };
+            _group.Type = ImportGrouping.TypeOf(_group.Kind);
+        }
+
+        var title = ImportGrouping.ReviewTitleForIntent(intent, _group, _fromFile);
+        Title = title;
+        TitleText.Text = title;
     }
 
     private void CancelClick(object sender, RoutedEventArgs e) => DialogResult = false;

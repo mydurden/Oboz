@@ -130,11 +130,8 @@ public static class ImportGrouping
 
         return group.Type switch
         {
-            DocType.Return =>
-                $"Накладна (повернення) № {num}",
-            DocType.Transfer =>
-                $"Накладна (переміщення) № {num}",
-            DocType.Receipt =>
+            // Приймання / повернення / переміщення — одна назва документа після проведення.
+            DocType.Return or DocType.Transfer or DocType.Receipt =>
                 $"Накладна (вимога) № {num}",
             DocType.Inventory when string.IsNullOrWhiteSpace(group.Number) && fromFile =>
                 "Рух майна за період",
@@ -158,6 +155,36 @@ public static class ImportGrouping
                 $"Акт списання вибухових матеріалів № {num}",
             _ => fromFile ? "Рух майна за період" : "Додавання майна"
         };
+    }
+
+    /// <summary>Підпис документа за наміром імпорту (одразу в UI перевірки).</summary>
+    public static string ReviewTitleForIntent(string intent, ImportDocGroup group, bool fromFile)
+    {
+        if (intent is ImportPosting.Accept or ImportPosting.Surrender or ImportPosting.Transfer)
+        {
+            var probe = new ImportDocGroup
+            {
+                Type = intent switch
+                {
+                    ImportPosting.Accept => DocType.Receipt,
+                    ImportPosting.Surrender => DocType.Return,
+                    _ => DocType.Transfer
+                },
+                Kind = intent switch
+                {
+                    ImportPosting.Accept => ImportMoveKind.Receipt,
+                    ImportPosting.Surrender => ImportMoveKind.Return,
+                    _ => ImportMoveKind.Transfer
+                },
+                Number = group.Number,
+                Date = group.Date,
+                StrongpointName = group.StrongpointName,
+                StrongpointRegNumber = group.StrongpointRegNumber
+            };
+            return ReviewTitle(probe, fromFile);
+        }
+
+        return ReviewTitle(group, fromFile);
     }
 
     public static bool LooksLikeAppNumber(string? number)
