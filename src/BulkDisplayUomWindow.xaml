@@ -69,9 +69,9 @@
                     <TextBox x:Name="FilterVyd" Grid.Column="1" MinHeight="40" FontSize="14"
                              ToolTip="Фільтр: вид" TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterUnit" Grid.Column="2" MinHeight="40" FontSize="14"
-                             ToolTip="Фільтр: базова О.В." TextChanged="FilterChanged"/>
+                             ToolTip="Фільтр: реальні О.В." TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterDisplay" Grid.Column="3" MinHeight="40" FontSize="14"
-                             ToolTip="Фільтр: альтернативні одиниці виміру" TextChanged="FilterChanged"/>
+                             ToolTip="Фільтр: альтернативні О.В." TextChanged="FilterChanged"/>
                     <TextBox x:Name="FilterFactor" Grid.Column="4" MinHeight="40" FontSize="14"
                              ToolTip="Фільтр: коефіцієнт" TextChanged="FilterChanged"/>
                 </Grid>
@@ -98,11 +98,11 @@
                         <DataGridTextColumn Header="Вид" Binding="{Binding VydText}"
                                             SortMemberPath="VydText" Width="2*" IsReadOnly="True"
                                             ElementStyle="{StaticResource CellLeft}"/>
-                        <DataGridTextColumn Header="Базова О.В." Binding="{Binding Unit}"
+                        <DataGridTextColumn Header="Реальні О.В." Binding="{Binding Unit}"
                                             SortMemberPath="Unit" Width="90" IsReadOnly="True"
                                             ElementStyle="{StaticResource CellCenter}"/>
                         <!-- Combo в CellTemplate; IsReadOnly=True — без edit-mode DataGrid. -->
-                        <DataGridTemplateColumn Header="Альтернативні одиниці виміру" Width="200"
+                        <DataGridTemplateColumn Header="Альтернативні О.В." Width="160"
                                                 SortMemberPath="SelectedDisplayUnit" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -110,7 +110,7 @@
                                               ItemsSource="{Binding DisplayChoices}"
                                               SelectedItem="{Binding SelectedDisplayUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                               IsSynchronizedWithCurrentItem="False"
-                                              ToolTip="Альтернативні одиниці виміру (як на картці). «+ Додати О.В.» — нова для виду."
+                                              ToolTip="Альтернативні О.В. (як на картці). «+ Додати О.В.» — нова для виду."
                                               SelectionChanged="DisplayUnitComboChanged"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
