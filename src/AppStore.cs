@@ -471,7 +471,9 @@ internal sealed class AppStore
         string? vyd = null,
         string? displayUnit = null,
         decimal? displayFactor = null,
-        bool updateDisplayFields = false)
+        bool updateDisplayFields = false,
+        string? supplyService = null,
+        bool updateSupplyService = false)
     {
         var nom = Data.Nomenclatures.FirstOrDefault(n => n.Id == id)
                   ?? throw new InvalidOperationException("Номенклатуру не знайдено.");
@@ -486,6 +488,8 @@ internal sealed class AppStore
             nom.DisplayUnit = (displayUnit ?? "").Trim();
             nom.DisplayFactor = displayFactor is > 0 ? displayFactor : null;
         }
+        if (updateSupplyService)
+            ApplyNomenclatureSupply(nom, supplyService);
         foreach (var p in Data.Properties.Where(p => p.NomenclatureId == id))
         {
             p.Name = nom.Name;
@@ -503,7 +507,8 @@ internal sealed class AppStore
         string? note = null,
         string? vyd = null,
         string? displayUnit = null,
-        decimal? displayFactor = null)
+        decimal? displayFactor = null,
+        string? supplyService = null)
     {
         var item = new NomenclatureItem
         {
@@ -514,6 +519,7 @@ internal sealed class AppStore
             DisplayUnit = (displayUnit ?? "").Trim(),
             DisplayFactor = displayFactor is > 0 ? displayFactor : null,
             Note = (note ?? "").Trim(),
+            SupplyService = SupplyServiceHelper.Normalize(supplyService) ?? "",
             CreatedAt = DateTime.Now
         };
         if (item.Name.Length == 0) item.Name = "Без назви";
@@ -522,6 +528,56 @@ internal sealed class AppStore
             NomenclatureVydNameMatch.LearnFromName(item.Name, item.Vyd, Data.VydKeywords);
         Save();
         return item;
+    }
+
+    /// <summary>
+    /// Масове призначення служби забезпечення на паспорти + синхрон на пов’язані картки майна.
+    /// Порожнє значення очищає службу. Один Save на пакет.
+    /// </summary>
+    public void UpdateNomenclatureSupplyServices(IEnumerable<(Guid Id, string? SupplyService)> updates)
+    {
+        EnsureNomenclatures();
+        var changed = false;
+        foreach (var (id, supplyRaw) in updates)
+        {
+            var nom = Data.Nomenclatures.FirstOrDefault(n => n.Id == id);
+            if (nom == null) continue;
+            if (!ApplyNomenclatureSupply(nom, supplyRaw)) continue;
+            changed = true;
+        }
+        if (changed) Save();
+    }
+
+    /// <summary>
+    /// Показати службу паспорта; якщо порожньо — єдина непорожня серед пов’язаних карток
+    /// (різні значення → порожньо, щоб не підставляти «випадкову»).
+    /// </summary>
+    public string ResolveNomenclatureSupply(NomenclatureItem nom)
+    {
+        var stored = SupplyServiceHelper.Normalize(nom.SupplyService) ?? "";
+        if (stored.Length > 0) return stored;
+        var linked = Data.Properties
+            .Where(p => p.NomenclatureId == nom.Id)
+            .Select(p => SupplyServiceHelper.Normalize(p.SupplyService) ?? "")
+            .Where(s => s.Length > 0)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        return linked.Count == 1 ? linked[0] : "";
+    }
+
+    /// <returns>true, якщо значення на паспорті або картках змінилось.</returns>
+    private bool ApplyNomenclatureSupply(NomenclatureItem nom, string? supplyRaw)
+    {
+        var norm = SupplyServiceHelper.Normalize(supplyRaw) ?? "";
+        var changed = !string.Equals(nom.SupplyService ?? "", norm, StringComparison.Ordinal);
+        nom.SupplyService = norm;
+        foreach (var p in Data.Properties.Where(p => p.NomenclatureId == nom.Id))
+        {
+            if (string.Equals(p.SupplyService ?? "", norm, StringComparison.Ordinal)) continue;
+            p.SupplyService = norm;
+            changed = true;
+        }
+        return changed;
     }
 
     /// <summary>Додати користувацький вид у CustomVyds (фіксований каталог не чіпаємо).</summary>

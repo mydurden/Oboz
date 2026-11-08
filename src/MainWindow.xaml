@@ -202,8 +202,7 @@
                     </Button>
                 </Grid>
 
-                <TextBlock x:Name="DraftHint"
-                           Text="Можете додати майно подвійним натисканням або простим перетягуванням"
+                <TextBlock x:Name="DraftHint" Visibility="Collapsed"
                            Foreground="{DynamicResource Muted}" FontSize="11" Margin="0,0,0,4" TextWrapping="Wrap"/>
                 <!-- Споруди: чіпи-вкладки над окремим полем майна (без «браузерного» шва) -->
                 <Grid x:Name="DraftContentFrame" VerticalAlignment="Top"

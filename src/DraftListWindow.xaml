@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="Hint" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,12"
+        <TextBlock x:Name="Hint" Visibility="Collapsed" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,12"
                    Foreground="{DynamicResource Muted}"/>
 
         <DataGrid x:Name="Grid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"

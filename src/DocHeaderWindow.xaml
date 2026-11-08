@@ -27,27 +27,18 @@
         <StackPanel x:Name="SingleNumberPanel" Grid.Row="1" Margin="0,0,0,12">
             <TextBlock Text="Номер документа" Margin="0,0,0,4"
                        Foreground="{DynamicResource TextPrimary}"/>
-            <TextBox x:Name="NumberBox" MinHeight="40" Margin="0,0,0,4"/>
-            <TextBlock Text="Залиште порожнім для безномерного документа (б/н)"
-                       FontSize="12" Foreground="{DynamicResource Muted}"
-                       TextWrapping="Wrap"/>
+            <TextBox x:Name="NumberBox" MinHeight="40"/>
         </StackPanel>
 
         <!-- ЯС/ЗЯС + ВР: спочатку Акт ВР, потім основний акт -->
         <StackPanel x:Name="YasVrNumberPanel" Grid.Row="1" Margin="0,0,0,12" Visibility="Collapsed">
             <TextBlock Text="Акт виконаних робіт" Margin="0,0,0,4"
                        Foreground="{DynamicResource TextPrimary}"/>
-            <TextBox x:Name="VrNumberBox" MinHeight="40" Margin="0,0,0,4"/>
-            <TextBlock Text="Порожньо — у документі буде «н/д»"
-                       FontSize="12" Foreground="{DynamicResource Muted}"
-                       TextWrapping="Wrap" Margin="0,0,0,12"/>
+            <TextBox x:Name="VrNumberBox" MinHeight="40" Margin="0,0,0,12"/>
 
             <TextBlock x:Name="PairedMainNumberLabel" Text="Акт якісного стану" Margin="0,0,0,4"
                        Foreground="{DynamicResource TextPrimary}"/>
-            <TextBox x:Name="YasNumberBox" MinHeight="40" Margin="0,0,0,4"/>
-            <TextBlock Text="Залиште порожнім для безномерного документа (б/н)"
-                       FontSize="12" Foreground="{DynamicResource Muted}"
-                       TextWrapping="Wrap"/>
+            <TextBox x:Name="YasNumberBox" MinHeight="40"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="0,0,0,12">

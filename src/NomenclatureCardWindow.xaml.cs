@@ -22,6 +22,7 @@ public partial class NomenclatureCardWindow : Window
         foreach (var label in NomenclatureKindNames.All)
             KindBox.Items.Add(label);
         FillVydCombo(existing?.Vyd);
+        FillSupplyCombo(existing == null ? "" : AppStore.Instance.ResolveNomenclatureSupply(existing));
 
         if (existing != null)
         {
@@ -44,6 +45,16 @@ public partial class NomenclatureCardWindow : Window
             FillDisplayUnitCombo(null, null);
         }
         _loading = false;
+    }
+
+    private void FillSupplyCombo(string? current)
+    {
+        SupplyBox.Items.Clear();
+        SupplyBox.Items.Add("");
+        foreach (var s in SupplyServiceHelper.All)
+            SupplyBox.Items.Add(s);
+        var norm = SupplyServiceHelper.Normalize(current) ?? "";
+        SupplyBox.SelectedItem = SupplyBox.Items.OfType<string>().FirstOrDefault(x => x == norm) ?? "";
     }
 
     private void FillVydCombo(string? selected)
@@ -273,18 +284,21 @@ public partial class NomenclatureCardWindow : Window
                 return;
             }
 
+            var supply = SupplyBox.SelectedItem as string ?? "";
+
             Guid savedId;
             if (_id is Guid id)
             {
                 AppStore.Instance.UpdateNomenclature(
                     id, name, unit, kind, note, vyd,
-                    displayUnit, factor, updateDisplayFields: true);
+                    displayUnit, factor, updateDisplayFields: true,
+                    supplyService: supply, updateSupplyService: true);
                 savedId = id;
             }
             else
             {
                 var created = AppStore.Instance.AddNomenclature(
-                    name, unit, kind, note, vyd, displayUnit, factor);
+                    name, unit, kind, note, vyd, displayUnit, factor, supply);
                 savedId = created.Id;
             }
 

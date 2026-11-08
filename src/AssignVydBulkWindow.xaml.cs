@@ -53,7 +53,6 @@ public partial class AssignVydBulkWindow : Window
                     n.Unit,
                     NomenclatureKindNames.Of(n.Kind),
                     isSelected: _nameMatchIds.Contains(n.Id));
-                row.PropertyChanged += RowOnPropertyChanged;
                 _allRows.Add(row);
             }
 
@@ -179,12 +178,6 @@ public partial class AssignVydBulkWindow : Window
         return null;
     }
 
-    private void RowOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(AssignVydRow.IsSelected))
-            UpdateSummary();
-    }
-
     private void ModeChanged(object sender, RoutedEventArgs e)
     {
         if (!_ready) return;
@@ -202,28 +195,18 @@ public partial class AssignVydBulkWindow : Window
         // ItemsSource лише якщо ще не прив’язано — повторне призначення скидає скрол.
         if (!ReferenceEquals(RowsGrid.ItemsSource, _visible))
             RowsGrid.ItemsSource = _visible;
-        UpdateSummary();
-    }
-
-    private void UpdateSummary()
-    {
-        var n = _visible.Count;
-        var m = _visible.Count(r => r.IsSelected);
-        SummaryText.Text = $"Знайдено {n} · обрано {m}";
     }
 
     private void SelectAllClick(object sender, RoutedEventArgs e)
     {
         foreach (var row in _visible)
             row.IsSelected = true;
-        UpdateSummary();
     }
 
     private void ClearAllClick(object sender, RoutedEventArgs e)
     {
         foreach (var row in _visible)
             row.IsSelected = false;
-        UpdateSummary();
     }
 
     private void SaveClick(object sender, RoutedEventArgs e)

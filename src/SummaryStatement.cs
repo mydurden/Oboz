@@ -64,7 +64,7 @@ internal static class SummaryStatement
         }
         if (!IsContiguous(list))
         {
-            error = "Оберіть лише суцільний діапазон сусідніх місяців.";
+            error = "Оберіть суцільний діапазон.";
             return false;
         }
         if (year < 1900 || year > 2100)
@@ -132,9 +132,7 @@ internal static class SummaryStatement
                 next.Sort();
                 return true;
             }
-            error =
-                "Оберіть лише суцільний діапазон сусідніх місяців. " +
-                "Після вибору краю можна додати лише сусідній місяць або зняти край.";
+            error = "Оберіть суцільний діапазон.";
             return false;
         }
 
@@ -149,8 +147,7 @@ internal static class SummaryStatement
             next.Remove(month);
             return true;
         }
-        error =
-            "З діапазону можна зняти лише крайній місяць, щоб не розірвати суцільність.";
+        error = "Зніміть крайній місяць.";
         return false;
     }
 

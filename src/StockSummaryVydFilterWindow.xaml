@@ -23,9 +23,6 @@
             <TextBox Style="{StaticResource CopyText}"
                      Text="Які види показувати" FontSize="22" FontWeight="SemiBold"
                      Margin="0,0,0,8"/>
-            <TextBlock FontSize="13" TextWrapping="Wrap"
-                       Foreground="{DynamicResource Muted}" Margin="0,0,0,10"
-                       Text="Галочка — вид у нотатці. О.В. відображення — підсумок через коефіцієнти карток."/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                 <Button Content="Обрати всі" Style="{StaticResource GhostButton}"
                         MinWidth="130" MinHeight="40" Margin="0,0,8,0"

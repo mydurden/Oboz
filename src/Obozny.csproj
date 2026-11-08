@@ -40,6 +40,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="Obozny.Tests" />
     <InternalsVisibleTo Include="VydRepro" />
+    <InternalsVisibleTo Include="UiCaptureObz8990" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.1" />

@@ -24,10 +24,7 @@
             <TextBlock Text="Узагальнююча відомість (Додаток 1)"
                        FontSize="20" FontWeight="SemiBold"
                        Foreground="{DynamicResource TextPrimary}"
-                       TextWrapping="Wrap" Margin="0,0,0,4"/>
-            <TextBlock Text="Суцільний діапазон місяців → таблиця на екрані. Excel — лише «Зберегти в Excel»."
-                       FontSize="12" TextWrapping="Wrap"
-                       Foreground="{DynamicResource Muted}" Margin="0,0,0,10"/>
+                       TextWrapping="Wrap" Margin="0,0,0,10"/>
 
             <!-- Рік зліва + короткий номер справа — один ряд -->
             <Grid Margin="0,0,0,8">

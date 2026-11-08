@@ -28,14 +28,9 @@
                 <TextBox x:Name="DraftCountText" Style="{StaticResource CopyText}"/>
             </StackPanel>
 
-            <Border Grid.Row="2" Background="{DynamicResource DraftBg}"
-                    CornerRadius="8" Padding="12,10" Margin="0,0,0,20">
-                <TextBox Style="{StaticResource CopyText}" FontSize="14"
-                         Text="Не забудьте провести ці документи, тому що майно, яке зарезервоване не відображається у загальному переліку залишків!"/>
-            </Border>
-
-            <Button Grid.Row="3" Content="Зрозуміло"
+            <Button Grid.Row="2" Content="Зрозуміло"
                     MinHeight="40" MinWidth="160"
+                    Margin="0,4,0,0"
                     HorizontalAlignment="Center"
                     Click="OkClick"/>
         </Grid>
