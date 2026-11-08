@@ -285,7 +285,7 @@ public partial class AddPropertyWindow : Window
         if (!BetaLicense.TryAllowDocumentImportExport(this)) return;
         var dlg = new OpenFileDialog
         {
-            Filter = "Excel і таблиці|*.xlsx;*.xlsm;*.xls;*.csv;*.txt|Excel|*.xlsx;*.xlsm;*.xls|CSV|*.csv;*.txt|Усі файли|*.*"
+            Filter = "Excel|*.xlsx;*.xlsm;*.xls|Усі файли|*.*"
         };
         if (dlg.ShowDialog() != true) return;
 

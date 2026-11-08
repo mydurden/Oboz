@@ -89,7 +89,7 @@
         </DataGrid>
 
         <Grid Grid.Row="3" Margin="0,16,0,0">
-            <Button Content="Завантажити з файлу Excel / CSV"
+            <Button Content="Завантажити з файлу Excel"
                     Style="{StaticResource GhostButton}" Padding="14,8" Click="ImportFile"
                     HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

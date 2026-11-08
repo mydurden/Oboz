@@ -130,7 +130,9 @@ public partial class ImportReviewWindow : Window
         foreach (var (id, title) in ImportPosting.Choices)
             IntentBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = title, Tag = id });
         IntentBox.SelectedItem = IntentBox.Items.OfType<System.Windows.Controls.ComboBoxItem>()
-            .First(i => Equals(i.Tag, selected));
+            .FirstOrDefault(i => Equals(i.Tag, selected))
+            ?? IntentBox.Items.OfType<System.Windows.Controls.ComboBoxItem>()
+                .First(i => Equals(i.Tag, ImportPosting.Register));
         _intentReady = true;
         ApplyIntent();
     }

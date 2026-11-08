@@ -70,7 +70,6 @@ public partial class ImportBulkReviewWindow : Window
 
         LinesGrid.ItemsSource = _lines;
         SummaryText.Text = $"Документів: {groups.Count}   ·   Рядків майна: {_lines.Count}";
-        RefreshUnknownWarn();
         FillIntent(ImportPosting.Guess(groups.SelectMany(g => g.Rows)));
         FillSupplyAll();
     }
@@ -145,17 +144,6 @@ public partial class ImportBulkReviewWindow : Window
         return MoveKindNames.ForUi(kind, type);
     }
 
-    private void RefreshUnknownWarn()
-    {
-        var n = _lines.Count(l => l.Kind == ImportMoveKind.Unknown
-                                  || MoveKindNames.IsUnknown(l.KindText));
-        UnknownWarnText.Visibility = n > 0 ? Visibility.Visible : Visibility.Collapsed;
-        if (n > 0)
-            UnknownWarnText.Text =
-                $"Є {n} рядків з невизначеним типом руху (жовта підсвітка). " +
-                "Оберіть тип у стовпці «Тип руху» або змініть намір нижче — не підтверджуйте навмання.";
-    }
-
     private void OnLoadingRow(object? sender, DataGridRowEventArgs e)
     {
         if (e.Row.Item is not BulkLine line)
@@ -192,7 +180,6 @@ public partial class ImportBulkReviewWindow : Window
         if (box.SelectedItem is not string label) return;
         line.KindText = label;
         line.Kind = MoveKindNames.ToImportKind(label);
-        RefreshUnknownWarn();
         // Перемалювати підсвітку після зміни типу.
         var idx = _lines.IndexOf(line);
         if (idx >= 0 && LinesGrid.ItemContainerGenerator.ContainerFromIndex(idx) is DataGridRow row)
@@ -204,7 +191,6 @@ public partial class ImportBulkReviewWindow : Window
         if (LinesGrid.SelectedItem is not BulkLine line) return;
         _lines.Remove(line);
         SummaryText.Text = $"Рядків майна: {_lines.Count}";
-        RefreshUnknownWarn();
     }
 
     private void FillIntent(string selected)
@@ -212,7 +198,10 @@ public partial class ImportBulkReviewWindow : Window
         IntentBox.Items.Clear();
         foreach (var (id, title) in ImportPosting.Choices)
             IntentBox.Items.Add(new ComboBoxItem { Content = title, Tag = id });
-        IntentBox.SelectedItem = IntentBox.Items.OfType<ComboBoxItem>().First(i => Equals(i.Tag, selected));
+        IntentBox.SelectedItem = IntentBox.Items.OfType<ComboBoxItem>()
+            .FirstOrDefault(i => Equals(i.Tag, selected))
+            ?? IntentBox.Items.OfType<ComboBoxItem>()
+                .First(i => Equals(i.Tag, ImportPosting.Register));
         _intentReady = true;
         ApplyIntent();
     }
@@ -241,7 +230,6 @@ public partial class ImportBulkReviewWindow : Window
                 line.KindText = MoveKindNames.Unknown;
             }
         }
-        RefreshUnknownWarn();
         LinesGrid.Items.Refresh();
     }
 

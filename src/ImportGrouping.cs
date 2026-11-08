@@ -187,14 +187,13 @@ internal static class ImportPosting
         (Accept, "Документ приймання"),
         (Surrender, "Здавання (повернення на склад служби)"),
         (Transfer, "Документ переміщення"),
-        (Register, "Перелік майна — реєстр руху"),
-        (Inventory, "Перелік майна — інвентаризація")
+        (Register, "Перелік майна — реєстр руху")
     };
 
     public static string Guess(IEnumerable<ImportRow> rows)
     {
         var list = rows.ToList();
-        if (list.Count == 0) return Inventory;
+        if (list.Count == 0) return Register;
         var op = list.Select(r => r.Operation).FirstOrDefault(s => !string.IsNullOrWhiteSpace(s)) ?? "";
         var n = op.ToLowerInvariant();
         if (n.Contains("здаван")) return Surrender;
@@ -209,8 +208,8 @@ internal static class ImportPosting
 
         var kinds = list.Select(r => r.Kind).Distinct().ToList();
         if (kinds.Count == 1 && kinds[0] == ImportMoveKind.Transfer) return Transfer;
-        if (kinds.Count == 1 && kinds[0] == ImportMoveKind.Inventory) return Inventory;
-        // Невизначені рядки — лишаємо «реєстр», щоб користувач явно обрав намір або тип у рядку.
+        // Інвентаризацію зі списку намірів прибрано — лишаємо «реєстр».
+        // Невизначені рядки — «реєстр», щоб користувач явно обрав намір або тип у рядку.
         return Register;
     }
 
